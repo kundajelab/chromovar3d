@@ -1,0 +1,1 @@
+wget -r --no-parent --directory-prefix=/srv/gs1/projects/snyder/jzaugg/histoneQTL/DNase/data/Degner_mapped_reads/ -R http://eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/all.mapped.reads.tar.gz http://eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/

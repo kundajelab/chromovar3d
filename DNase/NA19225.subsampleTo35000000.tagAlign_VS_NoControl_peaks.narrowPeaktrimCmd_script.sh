@@ -1,0 +1,1 @@
+cat NA19225.subsampleTo35000000.tagAlign_VS_NoControl_peaks.narrowPeak | awk '{trimstart=$2+$10-50} {trimend=$2+$10+50} {print $1"\t"trimstart"\t"trimend"\t"$8}' > NA19225.subsampleTo35000000.tagAlign_VS_NoControl_peaks.narrowPeakCenterSummit.bed

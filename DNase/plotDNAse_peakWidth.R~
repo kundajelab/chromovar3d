@@ -1,0 +1,11 @@
+
+args=commandArgs(trailingOnly=TRUE)
+
+dnase.f=args[1]
+dnase.f='/srv/gs1/projects/snyder/jzaugg/histoneQTL/DNase/data/hg19/peaks/subsampled/mergedPeaks/DNase_mergeBed.gzremoveBlacklist.gz'
+out=paste(dnase.f,'_peakWidth.pdf',sep='')
+dnase=read.table(dnase.f)
+
+pdf(out)
+hist(abs(dnase[,2]-dnase[,3]),main='Peak width distribution')
+dev.off()
