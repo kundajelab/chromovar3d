@@ -1,0 +1,27 @@
+
+MOTIFDIR='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/'
+DATADIR='/srv/gs1/projects/snyder/jzaugg/histoneQTL/'
+hmarks=c('H3K4ME1','H3K4ME3','H3K27AC','dhs','RNA')
+
+first=TRUE
+for (hmark in hmarks){
+    print(hmark)
+    anno.cur=read.table(paste(DATADIR,'peakAnnotation/peakLocations.ALL.',hmark,'.txt',sep=''),header=TRUE)
+    anno.cur=data.frame(anno.cur,new_peakid=paste(hmark,'_',as.character(anno.cur$id),sep=''))
+    anno.cur=anno.cur[,c('id','chr','start','end','new_peakid')]
+    anno.cur$chr=gsub('chr','',as.character(anno.cur$chr))
+    print(head(anno.cur))
+    if (first==FALSE){
+       anno=rbind(anno.cur,anno)
+    }
+    if (first==TRUE){
+       anno=anno.cur
+       first=FALSE
+    }
+}
+
+MERGED_PEAKS=paste(MOTIFDIR,'data/ALLpeaks.anno',sep='')
+write.table(anno,file=MERGED_PEAKS,sep='\t',quote=FALSE,row.names=F,col.names=T)
+#========================================================================
+
+#run MatrixEQTL to get a SNPQTLmatrix per 

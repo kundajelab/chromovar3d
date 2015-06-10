@@ -1,0 +1,102 @@
+
+TF_enrich_template='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/OverlapEnrichment/TF_overlap_QTLpeaks/TF_overlap_QTLpeaks'
+hqtlinTF_enrich_template='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/OverlapEnrichment/TF_overlap_hQTLs/TF_overlap_hQTLs'
+motif_enrich_template
+disruptedMotif_enrich_template
+
+#build heatmap data - one for local one for distal
+
+in_template='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/OverlapEnrichment/TF_overlap_QTLpeaks/TF_overlap_QTLpeaksHMARK.LocalQTL.TFBSoverlapEnrichment'
+build_heatmap_data=function(in_template,hmarks){
+	first=TRUE
+	for (hmark in c('H3K4ME1','H3K4ME3','H3K27AC')){
+	    current=read.table(gsub('HMARK',hmark,in_template),header=TRUE)
+	    current[which(as.numeric(as.character(current$BH))>=0.05),'enrichment']=0
+	    rownames(current)=as.character(current$tf)
+	    if (first==FALSE){
+	       total=cbind(total,current)
+	    }
+	    if (first==TRUE){
+	       total=data.frame(tf=as.character(current$tf),a=current$enrichment)
+	       colnames(total)[2]=hmark
+	       first=FALSE
+	    }
+	}
+}
+
+build_heatmap_data=function(in_template,enrichments,hmarks,out){
+        first=TRUE
+	keep=c()
+	for (hmark in hmarks){
+        for (enri in enrichments){
+            current=read.table(gsub('HMARK',hmark,gsub('ENRICH',enri,in_template)),header=TRUE)
+	    keep=unique(c(keep,current[which(as.numeric(as.character(current$BH))<=0.05),'tf']))
+            current[which(as.numeric(as.character(current$BH))>=0.05),'enrichment']=1
+	    rownames(current)=as.character(current$tf)
+            if (first==FALSE){
+               total=cbind(total,current[rownames(total),'enrichment'])
+	       colnames(total)[ncol(total)]=paste(hmark,enri)
+            }
+            if (first==TRUE){
+               total=data.frame(tf=as.character(current$tf),a=current$enrichment)
+	       rownames(total)=as.character(total$tf)
+               colnames(total)[2]=paste(hmark,enri)
+               first=FALSE
+            }
+	}
+        }
+	total=total[,-which(colnames(total)=='tf')]
+return(total)
+}
+hmarks=c('H3K4ME1','H3K4ME3','H3K27AC')
+enrichments=c('TF_overlap_QTLpeaks','TF_overlap_hQTLs')
+out='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/OverlapEnrichment/OverlapEnrichment'
+in_template='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/OverlapEnrichment/ENRICH/ENRICHHMARK.POSITIONQTL.TFBSoverlapEnrichment'
+
+plot_heatmap_by_enrichment_type=function(enrichments,out){
+locals=build_heatmap_data(gsub('POSITION','Local',in_template),enrichments,hmarks,paste(out,'.Local',sep=''))
+distals=build_heatmap_data(gsub('POSITION','Distal',in_template),enrichments,hmarks,paste(out,'.Distal',sep=''))
+colnames(locals)=paste('Local.',colnames(locals),sep='')
+colnames(distals)=paste('Distal.',colnames(distals),sep='')
+both=cbind(locals,distals[rownames(locals),])
+both[both>2]=2
+outboth=paste(out,'LocalAndDistal',sep='')
+pdf(paste(outboth,'.pdf',sep=''))
+require(pheatmap)
+require(cba)
+d <- dist(as.matrix(both),method='manhattan')
+hc <- hclust(d)
+co <- order.optimal(d, hc$merge)
+both.optimalRows=as.matrix(both)[co$order,]
+pheatmap(as.matrix(t(both.optimalRows)),cluster_rows=FALSE,fontsize=5,breaks=seq(from=-0.1,to=2,by=0.1),
+        color=colorRampPalette(c("blue", "white", "red"))(n = 21),cellwidth=5,cellheight=5)
+dev.off()
+}
+plot_heatmap_by_enrichment_type(c("TF_overlap_QTLpeaks"),paste(out,"TF_overlap_QTLpeaks",sep=''))
+plot_heatmap_by_enrichment_type(c("TF_overlap_hQTLs"),paste(out,"TF_overlap_hQTLs",sep=''))
+
+	#total=total[keep,]
+	#rowsums_total=rowSums(total)
+#infinites=which(is.infinite(rowsums_total))
+#if (length(infinites)>0){
+#total=total[-infinites,]
+#}
+require(pheatmap)
+require(cba)
+d <- dist(as.matrix(total))
+hc <- hclust(d)
+co <- order.optimal(d, hc$merge)
+total.optimalRows=as.matrix(total)[co$order,]
+
+pdf(paste(out,'.pdf',sep=''))
+pheatmap(as.matrix(total.optimalRows),cluster_cols=FALSE,fontsize=5,breaks=seq(from=0,to=2,by=0.1),
+        color=colorRampPalette(c("blue", "white", "red"))(n = 21),cellwidth=5,cellheight=5)
+dev.off()
+}
+hmarks=c('H3K4ME1','H3K4ME3','H3K27AC')
+enrichments=c('TF_overlap_QTLpeaks','TF_overlap_hQTLs')
+out='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/OverlapEnrichment/OverlapEnrichment'
+in_template='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/OverlapEnrichment/ENRICH/ENRICHHMARK.POSITIONQTL.TFBSoverlapEnrichment'
+
+locals=build_heatmap_data(gsub('POSITION','Local',in_template),enrichments,hmarks,paste(out,'.Local',sep=''))
+distals=build_heatmap_data(gsub('POSITION','Distal',in_template),enrichments,hmarks,paste(out,'.Distal',sep=''))

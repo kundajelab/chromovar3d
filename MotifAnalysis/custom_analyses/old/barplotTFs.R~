@@ -1,0 +1,15 @@
+
+args=commandArgs(trailingOnly=TRUE)
+tfdata.f=args[1]
+out=args[2]
+
+#tfdata.f='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/SNPQTLmatrix.RNA.gz.overlapTFBS.gz'
+#out='/home/oursu/testpdf'
+tfdata=read.table(tfdata.f)
+tfdata.pass=tfdata[which(as.character(tfdata[,10])=='maxQTL'),]
+counts=t(table(tfdata.pass[,c(10,18)]))
+counts=data.frame(counts,TF=rownames(counts),total=rowSums(counts))
+counts=counts[order(counts)]
+counts=data.frame(TF=rownames(counts),count=counts)
+write.table(counts,file=out,quote=FALSE,sep='\t',row.names=FALSE,col.names=TRUE)
+
