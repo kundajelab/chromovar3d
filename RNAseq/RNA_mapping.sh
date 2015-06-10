@@ -1,0 +1,136 @@
+
+
+RNAdata=/srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/data/
+RNAdataSNP=${RNAdata}SNPdata
+RNAdataTrans=${RNAdata}Transcriptome
+mkdir ${RNAdataTrans}
+mkdir ${RNAdataSNP}
+
+#========================================
+#1. Make a genome with Ns instead of SNPs
+#======================================== 
+#- vcf with N as alternative
+#high coverage seq
+vcf=/srv/gs1/projects/snyder/jzaugg/histoneQTL/ChIPseq_alignment/data/genomes/mergedVCF/all_YRI_compiled/all_YRI_compiled.ALL_CHROMOSOMES.mergedAcrossSNPSources.final.vcf
+cat ${vcf} | grep -v '##' | awk '{print $1"\t"$2"\t"$3"\t"$4"\tN\t"$6"\t"$7"\t"$8"\t"$9"\t1|1"}' > ${RNAdataSNP}/SNPs_for_N.vcf
+#Remove duplicate SNPs from the large vcf file
+cat ${RNAdataSNP}/SNPs_for_N.vcf | awk '!_[$3]++' > ${RNAdataSNP}/SNPs_for_N.dedup.vcf
+cat ${RNAdataSNP}/SNPs_for_N.dedup.vcf | sed 's/FORMAT\t1|1/FORMAT\tNperson/g' > ${RNAdataSNP}/SNPs_for_N.dedup.indName.vcf
+rm ${RNAdataSNP}/SNPs_for_N.dedup.vcf
+#Add Ns to genome - add to the male genome
+p=/home/oursu/devtools/Python-2.7.6/python 
+code=/srv/gsfs0/projects/kundaje/users/oursu/code/personalGenomeAlignment/new_ase_code/ase/python/addSnpsToFa.py
+vcf=${RNAdataSNP}/SNPs_for_N.dedup.indName.vcf
+fadir=/srv/gs1/projects/kundaje/oursu/Alignment/data/ENCODE_genomes/male/
+dict=/srv/gs1/projects/kundaje/oursu/Alignment/data/ENCODE_genomes/male/ref.fa.fai
+outpref=${RNAdataTrans}/N_hg19_ENCODE
+indiv=Nperson
+${p} ${code} -v ${vcf} --unphased ${vcf}.unphased ${fadir} ${dict} ${outpref} ${indiv}
+#DONE! We have a genome with Ns.
+
+#We'll have 1 universal male genome, and we'll get female/male specific transcriptomes by subsetting gtf file below.
+Ngenome=${RNAdataTrans}/Ngenome.hg19_ENCODE.male.fa
+cp ${outpref}.paternal.fa ${Ngenome}
+rm ${outpref}.paternal.fa
+rm ${outpref}.maternal.fa
+#==========================================
+
+#======================================================================================
+#2. gffread to make fasta genome (maternal=female and paternal=male) into transcriptome
+#======================================================================================
+RNAdata=/srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/data/
+RNAdataSNP=${RNAdata}SNPdata
+RNAdataTrans=${RNAdata}Transcriptome
+gencode_gtf=${RNAdata}GENCODE_v19_2014-06-03/gencode.v19.annotation.PC.lincRNA.gtf
+gencode_gtf_gz=${RNAdata}GENCODE_v19_2014-06-03/gencode.v19.annotation.gtf.gz
+zcat ${gencode_gtf_gz} | grep "protein_coding\|lincRNA" > ${gencode_gtf}
+#Female transcriptome
+gtf_female=${RNAdata}GENCODE_v19_2014-06-03/gencode.v19.annotation.female.PC.lincRNA.gtf
+cat ${gencode_gtf} | grep -v chrY > ${gtf_female}
+out_female=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedCDS.Nfemale.fa.out
+splicedCDS_female=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedCDS.Nfemale.fa
+splicedExon_female=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedExon.Nfemale.fa
+module load cufflinks/2.2.0
+gffread ${gtf_female} -g ${Ngenome} -s ${dict} -x ${splicedCDS_female} -w ${splicedExon_female} -o ${out_female}
+/home/oursu/devtools/Python-3.2.5/python /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/src/FilterByName.py --input ${splicedExon_female} --output ${splicedExon_female}.dedup.fa
+
+#Male transcriptome
+out_male=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedCDS.Nmale.fa.out
+splicedCDS_male=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedCDS.Nmale.fa
+splicedExon_male=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedExon.Nmale.fa
+module load cufflinks/2.2.0
+gffread ${gencode_gtf} -g ${Ngenome} -s ${dict} -x ${splicedCDS_male} -w ${splicedExon_male} -o ${out_male}
+/home/oursu/devtools/Python-3.2.5/python /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/src/FilterByName.py --input ${splicedExon_male} --output ${splicedExon_male}.dedup.fa
+
+#======================
+#3. Index transcriptome
+#======================
+RNAdata=/srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/data/
+RNAdataSNP=${RNAdata}SNPdata
+RNAdataTrans=${RNAdata}Transcriptome
+splicedExon_female=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedExon.Nfemale.fa
+splicedExon_male=${RNAdataTrans}/gencode.v19.annotation.PC.lincRNA.gtf.splicedExon.Nmale.fa
+
+#Exons
+#=====
+#Female                           
+splicedExon_female_dedup=${splicedExon_female}.dedup.fa                                                                                                                      
+out_idx=${splicedExon_female_dedup}_IDX_sailfish
+script_idx=${out_idx}_script.sh
+echo "module load sailfish/0.6.3"> ${script_idx}
+echo "sailfish index -t ${splicedExon_female_dedup} -o ${out_idx} -k 24" >> ${script_idx}
+chmod 711 ${script_idx}
+qsub -l h_vmem=20G -o ${script_idx}.o -e ${script_idx}.e ${script_idx}
+#Male                                                                                                                                                                       
+splicedExon_male_dedup=${splicedExon_male}.dedup.fa
+out_idx=${splicedExon_male_dedup}_IDX_sailfish
+script_idx=${out_idx}_script.sh
+echo "module load sailfish/0.6.3"> ${script_idx}
+echo "sailfish index -t ${splicedExon_male_dedup} -o ${out_idx} -k 24 -f" >> ${script_idx}
+chmod 711 ${script_idx}
+qsub -l h_vmem=20G -o ${script_idx}.o -e ${script_idx}.e ${script_idx}
+
+#===========
+#4. Sailfish
+#===========
+#GEUVADIS
+#Script to determine female/male and run sailfish quant on the fastqs
+python /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/src/quantify_RNA.py
+#Merge values into 1 table
+/srv/gsfs0/projects/kundaje/users/oursu/code/sequencingUtilities/peakCalling/chromoVariationCode/merge_valuesAcrossIndividuals.sh /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS/ quant.gene_level.sf 3 quant.gene_level.sf /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS_data_matrix/GEUVADIS_DATA_MATRIX 
+cat /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS_data_matrix/GEUVADIS_DATA_MATRIX | sed 's/aname/gene/g' | gzip > /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS_data_matrix/GEUVADIS_DATA_MATRIX.gz
+rm /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS_data_matrix/GEUVADIS_DATA_MATRIX
+
+out=/srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS_data_matrix/GEUVADIS.Transcript.DATA_MATRIX
+/srv/gsfs0/projects/kundaje/users/oursu/code/sequencingUtilities/peakCalling/chromoVariationCode/merge_valuesAcrossIndividuals.sh /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS/ quant.sf 3 quant.sf ${out}
+cat ${out} | sed 's/aname/gene/g' | gzip > ${out}.gz
+rm ${out}
+
+out=/srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS_data_matrix/GEUVADIS.Gene.DATA_MATRIX
+/srv/gsfs0/projects/kundaje/users/oursu/code/sequencingUtilities/peakCalling/chromoVariationCode/merge_valuesAcrossIndividuals.sh /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/GEUVADIS/ quant.gene_level.sf 3 quant.gene_level.sf ${out}
+cat ${out} | sed 's/aname/gene/g' | gzip > ${out}.gz
+rm ${out}
+
+#Pickrell data
+#Download
+/srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/src/download_Pickrell_fastqs.sh
+#Sailfish
+python /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/src/quantify_RNA_Pickrell.py
+#Compile data matrix
+datadir=/srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/Pickrell/data
+mkdir ${datadir}
+cp /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/Pickrell/SAILFISH/*/*quant.sf ${datadir}
+out=${datadir}/Pickrell.argonne.Transcript.DATA_MATRIX
+code=/srv/gsfs0/projects/kundaje/users/oursu/code/sequencingUtilities/peakCalling/chromoVariationCode/merge_valuesAcrossIndividuals.sh
+${code} ${datadir} quant.sf 3 quant.sf ${out}
+cat ${out} | sed 's/aname/gene/g' | gzip > ${out}.gz
+rm ${out}
+rm ${datadir}/*signal
+
+cp /srv/gs1/projects/snyder/jzaugg/histoneQTL/RNAseq/results/Pickrell/SAILFISH/*/*quant.gene_level.sf ${datadir}
+out=${datadir}/Pickrell.argonne.Gene.DATA_MATRIX
+code=/srv/gsfs0/projects/kundaje/users/oursu/code/sequencingUtilities/peakCalling/chromoVariationCode/merge_valuesAcrossIndividuals.sh
+${code} ${datadir} quant.gene_level.sf 3 quant.gene_level.sf ${out}
+cat ${out} | sed 's/aname/gene/g' | gzip > ${out}.gz
+rm ${out}
+rm ${datadir}/*signal
