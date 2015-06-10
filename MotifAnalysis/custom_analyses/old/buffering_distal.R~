@@ -1,4 +1,0 @@
-
-i.f='/srv/gs1/projects/snyder/jzaugg/histoneQTL/HiC/InteractionPipeline/GM12878_Fabian/SignificantInteractions/HiCcorrelations_0.2_2MB_chrCHROMtxt'
-chromo=1
-interactions=read.table(gsub('CHROMO',as.character(chromo),i.f),header=T)

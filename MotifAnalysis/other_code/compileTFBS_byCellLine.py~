@@ -1,0 +1,43 @@
+from optparse import OptionParser
+import os
+import math,re
+from time import gmtime, strftime
+import gzip,sys
+'''
+Make vcf for imputed individuals.
+'''
+
+def main():
+    parser=OptionParser()
+    parser.add_option('--mfile',dest='mfile',default='/srv/gsfs0/projects/kundaje/commonRepository/encode/data/byDataType/bindingSites/encodeMotifs/dec2013/motifs/motifs.txt')
+    parser.add_option('--out',dest='out',default='/srv/gs1/projects/snyder/jzaugg/histoneQTL/motif_analysis/data/motifPWM/pouya.PWM.motif.Homer')
+    opts,args=parser.parse_args()
+    
+    out=open(opts.out,'w')
+    for line in open(opts.mfile,'r').readlines():
+        if line[0:1]=='>':
+            print line
+            #This is a motif name
+            out.write('>Consensus'+'\t'+re.sub(' ','_',line.strip())+'\t'+'0'+'\n')
+        else:
+            #This is from PWM. We add 0.001 and we write it.
+            items=line.strip().split()
+            psc=0.001
+            out.write(str(psc+float(items[1]))+'\t'+str(psc+float(items[2]))+'\t'+str(psc+float(items[3]))+'\t'+str(psc+float(items[4]))+'\n')
+
+def qsub_a_command(cmd,shell_script_name,split_string=',',memory_number='20G'):
+    f=open(shell_script_name,'w')
+    cmds=cmd.split(split_string)
+    for i in range(len(cmds)):
+        f.write(cmds[i]+'\n')
+    f.close()
+    os.system('chmod 711 '+shell_script_name)
+    #Qsub the script                                                                                                                                                       
+    os.system("qsub -l mem_free="+memory_number+" -l h_vmem="+memory_number+" -l h_rt=20:00:00 -o "+shell_script_name+'.o'+' -e '+shell_script_name+'.e'+' '+shell_script_name)
+
+
+
+                
+
+
+main()

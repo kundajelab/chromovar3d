@@ -1,0 +1,62 @@
+args=commandArgs(trailingOnly=TRUE)
+
+tf=args[1]
+
+controlTemplate='/srv/gsfs0/projects/kundaje/users/oursu/histoneQTLproject/motif_analysis/data/motifPWM/matchesPerTF/correctedByPouyaControls/motifFreqMatrices/matchesPerTF/motif.pouya.Motif.MOTIFNAME_known1scanThresh2.MATCH.logOdds2.gzControlMotifMOTIFNUM.motifScores.gz'
+
+
+tf_template=gsub('MOTIFNAME',tf,controlTemplate)
+out=paste(gsub('ControlMotifMOTIFNUM.motifScores.gz','',tf_template),'Distribution',sep='')
+
+for (i in c(1:10)){
+    print(i)
+    if (file.exists(gsub('MOTIFNUM',as.character(i),tf_template))){
+       	  cur_data=read.table(gsub('MOTIFNUM',as.character(i),tf_template))
+	  cur_data=cbind(cur_data,name=gsub('-2$','',cur_data[,1]))
+	  cur_data=cur_data[order(cur_data[,6],decreasing=T),]
+	  dupli=which(duplicated(cur_data$name))
+	  if (length(dupli)>0){
+	     cur_data=cur_data[-dupli,]
+	     colnames(cur_data)[ncol(cur_data)-1]=paste('Control',as.character(i),sep='')
+	  }
+	  rownames(cur_data)=cur_data$name
+	  if (i==1){
+	     data=cur_data
+	  }
+	  if (i!=1){
+       	     data=merge(data,cur_data[,c(5,6)],by='row.names',all.X=T)
+	     data=data[,-1]
+	  }
+       }
+    }
+}
+rownames(data)=data[,1]
+data=data[,which(grepl('Control',colnames(data)))]
+
+true_data=read.table(gsub('ControlMotifMOTIFNUM.motifScores.gz','',tf_template))
+true_data=true_data[order(true_data[,5],decreasing=T),]
+dupli_stuff=which(duplicated(paste(true_data[,1],':',true_data[,2],'-',true_data[,3],sep='')))
+if (length(dupli_stuff)>0){
+   true_data=true_data[-dupli_stuff,]
+}
+rownames(true_data)=paste(true_data[,1],':',true_data[,2],'-',true_data[,3],sep='')
+
+fulldata=merge(data,true_data,by='row.names',all.X=T)
+rownames(fulldata)=fulldata[,1]
+fulldata=fulldata[,-1]
+colnames(fulldata)[ncol(fulldata)]='TrueScore'
+fulldata=cbind(fulldata,TrueMinusMaxControl=fulldata$TrueScore-apply(fulldata[,which(grepl('Control',colnames(fulldata)))],1,max))
+
+pdf(paste(out,'.pdf',sep=''))
+hist(fulldata$TrueMinusMaxControl,breaks=1000)
+dev.off()
+
+#print top 5% percentile
+print('top 5% quantile')
+print(quantile(fulldata$TrueMinusMaxControl,0.95))
+sd_=sd(fulldata$TrueMinusMaxControl)
+m=mean(fulldata$TrueMinusMaxControl)
+print('Mean plus 2 sds')
+print(m+2*sd_)
+print('Mean plus 3 sds')
+print(m+3*sd_)
