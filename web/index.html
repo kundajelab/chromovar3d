@@ -1,0 +1,479 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>CHROMVAR2</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+      <div class="page-header">
+
+        <p>
+TEMP WEB PAGE FOR CHROMVAR2
+TEMP WEB PAGE FOR CHROMVAR2
+TEMP WEB PAGE FOR CHROMVAR2
+TEMP WEB PAGE FOR CHROMVAR2
+TEMP WEB PAGE FOR CHROMVAR2
+TEMP WEB PAGE FOR CHROMVAR2
+
+          </p>  
+<!--	<img src="./images/main_illustration.png" /> <br><br><br> -->
+
+          <h2>GRID VISUALIZATION</h2>
+          <p>Select <i>Initialize Grid Visualization</i> to obtain a grid of uniformly processed data sets (columns) across all consolidated and/or unconsolidated epigenomes (rows). 
+		  <br>Select data views (signal tracks, peak calls, read alignments)
+		  <br>Select grid-cells
+		  <br>Visualize in the epigenome browser
+		  </p>
+          
+		  <button id="btn_vis_init" style="display:block"> Initialize grid visualization </button>
+          <div id="div_vis_area" style="display:none">
+
+
+          <br><input type="checkbox" id="chkbox_vis_rep_hist_pval" class="chkbox_vistable"> 
+		<strong> Uniform Signal Coverage Tracks (-log10(p-value)) (Recommended)</strong></input>
+		  <input type="text" id="text_vis_rep_hist_pval" maxlength="3" size="3"></input>          
+
+          <br><input type="checkbox" id="chkbox_vis_rep_hist_fc" class="chkbox_vistable"> 
+		<strong> Uniform Signal Coverage Tracks (fold enrichment)</strong></input>
+		  <input type="text" id="text_vis_rep_hist_fc" maxlength="3" size="3"></input>
+
+          <br><input type="checkbox" id="chkbox_vis_imp_sig" class="chkbox_vistable"> 
+		<strong> Imputed Signal Coverage Track (predicted -log10(p-value))</strong></input>
+		  <input type="text" id="text_vis_imp_sig" maxlength="3" size="3"></input>          
+
+          <br><input type="checkbox" id="chkbox_vis_rep_hist_dpeak" class="chkbox_vistable"> 
+		<strong>Uniform Peak Calls (data-specific default)</strong></input>
+
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="chkbox_vis_rep_hist_npeak" class="chkbox_vistable"> 
+		<strong>Narrow Peaks for histone Chip-Seq and DNase-seq (Recommended)</strong></input>
+<!--
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="chkbox_vis_rep_hist_bpeak" class="chkbox_vistable"> 
+		<strong>Broad Peaks for histone Chip-Seq</strong></input>
+-->
+          <br>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="chkbox_vis_rep_hist_gpeak" class="chkbox_vistable"> 
+		<strong>Gapped Peaks for histone Chip-Seq (Recommended)</strong></input>
+
+          <br><input type="checkbox" id="chkbox_vis_rep_hist_align" class="chkbox_vistable"> 
+		<strong> Reprocessed Filtered Alignments (36bp uniform mappability) </strong></input>
+          <br><input type="checkbox" id="chkbox_vis_chr_state_15_catMat" class="chkbox_vistable"> 
+		<strong> Compressed view of core chromatin state model (all 127 consolidated epigenomes)</strong></input>
+<!--
+          <br><input type="checkbox" id="chkbox_vis_chr_state_18_catMat" class="chkbox_vistable"> 
+		<strong> Epilogos (18-state model from observed data)</strong></input>
+          <br><input type="checkbox" id="chkbox_vis_chr_state_25_catMat" class="chkbox_vistable"> 
+		<strong> Epilogos (25-state model from imputed data)</strong></input>
+-->
+          <br><input type="checkbox" id="chkbox_vis_chr_state_15_qcat" class="chkbox_vistable"> 
+		<strong> Epilogo of core chromatin state model (all 127 consolidated epigenomes)</strong></input>
+
+
+          <br><input type="checkbox" id="chkbox_vis_DMRs" class="chkbox_vistable">
+        <strong> Differentially Methylated Regions </strong></input>
+      
+          <br><input type="checkbox" id="chkbox_vis_RRBS" class="chkbox_vistable">
+        <strong> Reduced Representation Bisulfite Sequencing (RRBS) methylation calls</strong></input>
+      
+          <br><input type="checkbox" id="chkbox_vis_WGBS" class="chkbox_vistable">
+        <strong> Whole Genome Bisulphite Sequencing (WGBS) methylation calls</strong></input>
+
+          <br><input type="checkbox" id="chkbox_vis_mCRF" class="chkbox_vistable">
+        <strong> MeDIP/MRE methylation calls </strong></input>
+
+
+          <table cellpadding="0" cellspacing="0" border="1" width="100%" class="data-table cell-border display compact" style="border-collapse:collapse" id="vistable">
+          <thead id="vistable_thead"></thead>
+          <tbody id="vistable_tbody"></table>
+
+          <script type="text/javascript">
+		// initialize check boxes
+  		init_vis();
+
+		function update_cell()
+		{
+			var avail = get_data_avail_map();
+			var ignore_unconsolidated = $("#chkbox_vis_hide_uc").is(":checked");
+
+			// loop through all cells 
+			$("td.epgname").each(function(){
+				var $tr = $(this).closest('tr');
+				var rowid = $tr.index();
+				var row = $tr.find('td:first').eq(0).text();
+
+				var eid = "";
+				if ( $(this).hasClass( "consolidated" ) ) 
+					eid = row.split(" ")[0];
+				else 
+					eid = row.replace(/ /g,"_");
+
+				$tr.find("td.cell").each(function () {
+					var $this = $(this);
+					var colid = $this.index();
+					var col = $('thead').find('th').eq(colid).text();
+
+					if ( colid < 4 ) {
+						if ( eid.length > 4 ) 
+							$this.eq(0).html( "" );
+						else
+							$this.eq(0).html( "1" );
+					}
+					else if ( avail[eid][col].consolidated || avail[eid][col].unconsolidated )
+						$this.eq(0).html( avail[eid][col].consolidated + avail[eid][col].unconsolidated );
+					else
+						$this.eq(0).html( "" );
+				});
+			});
+			
+		}
+
+		// filtering of table rows
+		$.fn.dataTableExt.afnFiltering.push( function( oSetting, aData, iDataIndex) {
+			var is_consolidated_epg = (aData[1][0]=="E"&&aData[1][1]=="0" || aData[1][0]=="E"&&aData[1][1]=="1");
+			var ignore_unconsolidated = $("#chkbox_vis_hide_uc").is(":checked");
+
+			return ignore_unconsolidated && is_consolidated_epg 
+				|| !ignore_unconsolidated;
+		});
+
+		$(function( $ ) {
+
+			$("#btn_vis_init").click( function() {
+				$("#btn_vis_init").css("display","none");
+				$("#div_vis_area").css("display","inline");
+
+				// initialize table
+				var thead = "<tr><th class=\"rotate\">EPG_GROUP</th>" 
+						+ "<th class=\"rotate selectable white\">"
+							+ "<p>Options</p>"
+						  	+ "<input type=\"checkbox\" id=\"chkbox_vis_hide_uc\" class=\"chkbox_vistable\"> "
+							+ "<strong>Ignore unconsolidated epigenome data</strong></input>"
+							+ "<br>"
+						  	+ "<input type=\"checkbox\" id=\"chkbox_vis_new_page\" checked> "
+							+ "<strong>Open in a new page (deactivate pop-up blockers)</strong></input>"
+							+ "<br><br>"
+							+ "<button id=\"btn_vis\" style=\"color:black\">Visualize</button>&nbsp&nbsp"
+							+ "<button id=\"btn_reset\" style=\"color:black\">Reset all</button>&nbsp&nbsp"
+							+ "<button id=\"btn_expand\" style=\"color:black\">Expand all</button>&nbsp&nbsp"
+							+ "<button id=\"btn_collapse\" style=\"color:black\">Collapse all</button>&nbsp"
+						+ "</th>"
+						+ "<th class=\"rotate selectable\"><div><span class=rotatedcol>"+assay_name_chr_prim15+"</span></div></th>"
+						+ "<th class=\"rotate selectable\"><div><span class=rotatedcol>"+assay_name_chr_exp18+"</span></div></th>"
+						+ "<th class=\"rotate selectable\"><div><span class=rotatedcol>"+assay_name_imp_chr_12m+"</span></div></th>";
+
+				for (var i=0; i<data_assay.length-1; i++) { // -1 <--- remove Input from assay columns (adhoc)
+					thead = thead + "<th class=\"rotate assayname selectable\"><div>" + data_assay[i].name + "</div></th>";
+				}
+				thead = thead + "</tr>";
+				$('#vistable_thead').append(thead);
+
+				var tbody = "";
+				for (var i=0; i<data_epg.length; i++) {
+
+					if ( data_epg[i].consolidated=="1" ) {
+						tbody += "<tr class=\"consolidated\"><td class=\"read_only\">" + data_epg[i].group + "</td>";
+						tbody += "<td class=\"epgname selectable consolidated\">" + data_epg[i].eid + " " + data_epg[i].name + "</td>";
+					}
+					else {
+						tbody += "<tr class=\"unconsolidated\"><td class=\"read_only\">" + data_epg[i].group + "</td>";
+						//tbody += "<td class=\"epgname selectable unconsolidated\">" + data_epg[i].eid + " " + data_epg[i].name + "</td>";
+						tbody += "<td class=\"epgname selectable unconsolidated\">" + data_epg[i].eid.replace(/_/g," ") + "</td>";
+					}
+
+					tbody += "<td class=\"selectable cell\"></td>" // chr_state_15 
+						+ "<td class=\"selectable cell\"></td>" // 18
+						+ "<td class=\"selectable cell\"></td>"; // 25 (imp.)
+					for(var j=0; j<data_assay.length-1; j++) { // -1 because of Input column
+						tbody += "<td class=\"selectable cell\"></td>";
+					}
+					tbody += "</tr>";
+				}
+				$('#vistable_tbody').append(tbody);
+
+				// no way to disable buggy sorting in dataTable, this is the only way
+				// sorting makes weird clickable area on th and removes js class of all cells under it.
+				aTargets = new Array();
+				for (var i=1; i<=data_assay.length-1+1+assay_num_vis; i++ )
+					aTargets.push( i );
+
+				var oTable = $('#vistable').dataTable({ 
+					"asStripeClasses": [],
+					"border": 1,
+					"bLengthChange": false, 
+					"bPaginate": false,
+					"aaSorting": [],
+					"aoColumnDefs": [ { 'bSortable': false, 'aTargets': aTargets} ],})
+					.rowGrouping({  bExpandableGrouping: true,
+		 				asExpandedGroups: ["Adipose",], // !! BUG in rowGrouping and selectableTable !! The first group should be expanded!!!!!!!
+						fnOnGrouped: function( aoGroups ) { 	
+						},
+						fnOnGroupCreated: function( oGroup ) { 				
+						},
+						fnOnGroupClicked: function( oGroup ) {
+						},
+						fnOnGroupCompleted: function( oGroup ) {
+							var length = $('#vistable tr' + oGroup.groupItemClass).length;
+							$(oGroup.nGroup).find("td").append(" ("+length+")");
+						},
+						fnGroupLabelFormat: function(label, oGroup) { 
+							 return "<i><strong>"+ label + "</strong></i>";
+						} 
+				});
+			
+				// initialize table selection module
+				$("#vistable").selectableTable({
+					"bSort" : false,
+					autoRefresh: true,
+
+					stop: function() {
+
+						$("td." + "ui-selected").each(function(){ 
+							var $this = $(this);
+
+							if ( $this.hasClass( "epgname" ) ) { // dragging on epigenome name
+								var $tr = $this.closest('tr');
+
+								$tr.find("td.cell").each(function () {
+									var $this = $(this);
+
+									if ( $this.hasClass( "ui-selected_to_vis_row" ) ) 
+										$this.removeClass( "ui-selected_to_vis_row" );
+									else 						
+										$this.addClass( "ui-selected_to_vis_row" );
+								});
+
+							}  // dragging on data cells
+							else {
+								if ( $this.hasClass( "ui-selected_to_vis" ) )
+									$this.removeClass( "ui-selected_to_vis" );
+								else
+									$this.addClass( "ui-selected_to_vis" );
+							}
+						});
+
+						$("th." + "ui-selected").each(function(){ // dragging on assay name
+							var $this = $(this);
+							var colid = $this.index();
+							var col = $('thead').find('th').eq(colid).text();
+							$("#vistable tbody tr td.selectable:nth-child("+parseInt(colid+1)+")").each(function () { 
+								var $this = $(this);
+								if ( $this.hasClass( "ui-selected_to_vis_col" ) ) {
+									$this.removeClass( "ui-selected_to_vis_col" );
+								}
+								else {
+									$this.addClass( "ui-selected_to_vis_col" );
+								}
+							});
+
+						});
+
+
+					},
+				});
+
+				// highlight while hovering mouse on grid
+		 		$('.data-table').tableHover({ 
+					rowClass: "rowHover", 
+					colClass: "colHover", 
+					clickClass: "rowStick", 
+					headCols: true,
+					ignoreCols:[1,2]});
+
+				// visualize button event handler
+				$("#btn_vis").click( function() {
+					var dpeak_checked = $("#chkbox_vis_rep_hist_dpeak").is(":checked");
+					var ignore_unconsolidated = $("#chkbox_vis_hide_uc").is(":checked");
+
+					var filter = new Array();
+
+					// loop through all cells 
+					$("td.epgname").each(function(){
+						var $tr = $(this).closest('tr');
+						var rowid = $tr.index();
+						var row = $tr.find('td:first').eq(0).text();
+
+						var eid = ""
+						if ( $(this).hasClass( "consolidated" ) )
+							eid = row.split(" ")[0];
+						else
+							eid = row.replace(/ /g,"_");
+
+						$tr.find("td.cell").each(function () {
+							var $this = $(this);
+							var colid = $this.index();
+							var col = $('thead').find('th').eq(colid).text();
+
+							if ( $this.hasClass( "ui-selected_to_vis" ) ||
+								 $this.hasClass( "ui-selected_to_vis_col" ) ||
+								 $this.hasClass( "ui-selected_to_vis_row" ) ) {
+
+								var obj = {"eid":eid,"assay":col};
+
+								if ( dpeak_checked ) 
+									obj[ "dpeak" ] = true; // dpeak = use default peak;
+								if ( ignore_unconsolidated ) 
+									obj[ "ignore_uc" ] = true; // dpeak = use default peak;
+
+								filter.push( obj );
+
+								//console.log( "filter:" + eid + "," + col );
+							}
+
+						});
+					});	
+			
+					visualize_grid( filter );
+				});
+
+				// reset button event
+				$("#btn_expand").click( function() {
+ 					$('.dataTables_wrapper').find('.collapsed-group').trigger('click');
+                });
+
+				$("#btn_collapse").click( function() {
+ 					$('.dataTables_wrapper').find('.expanded-group').trigger('click');
+                });
+
+				$("#btn_reset").click( function() {
+					var filter = new Array();
+		
+					// loop through all cells 
+					$("td.epgname").each(function(){
+						var $tr = $(this).closest('tr');
+						var rowid = $tr.index();
+						var row = $tr.find('td:first').eq(0).text();
+
+						$tr.find("td.cell").each(function () {
+							var $this = $(this);
+							var colid = $this.index();
+							var col = $('thead').find('th').eq(colid).text();
+
+							if ( $this.hasClass( "ui-selected_to_vis" ) ) 	  $this.removeClass( "ui-selected_to_vis" );
+							if ( $this.hasClass( "ui-selected_to_vis_col" ) ) $this.removeClass( "ui-selected_to_vis_col" );
+							if ( $this.hasClass( "ui-selected_to_vis_row" ) ) $this.removeClass( "ui-selected_to_vis_row" );
+						});
+					});	
+				});
+
+				$(":checkbox.chkbox_vistable").click(function() {
+					if ( document.getElementById("chkbox_vis_rep_hist_dpeak").checked == false ) {
+						document.getElementById("chkbox_vis_rep_hist_npeak").disabled 	= false; 
+						//document.getElementById("chkbox_vis_rep_hist_bpeak").disabled 	= false; 
+						document.getElementById("chkbox_vis_rep_hist_gpeak").disabled 	= false;
+					}
+					else {
+						document.getElementById("chkbox_vis_rep_hist_npeak").disabled 	= true; 
+						//document.getElementById("chkbox_vis_rep_hist_bpeak").disabled 	= true; 
+						document.getElementById("chkbox_vis_rep_hist_gpeak").disabled 	= true; 
+					}
+
+					update_cell();
+					oTable.fnDraw();
+				});
+				
+				update_cell();	
+
+				// by default unconsolidated data is hidden (buggy if chkbox is initially checked)
+				$('#chkbox_vis_hide_uc').click();
+			});			
+		});
+
+          </script>
+
+          <br><div id=embed_vis style="margin:20px;border:solid 2px green;display:none;" ></div>
+
+          </div>		
+				  
+        </div>
+		  <h3>Instructions:</h3>
+		  <p>
+		  Epigenomes are ordered by groups (you can expand/hide groups by clicking +/-). 
+		  <br>You can select different views of the data (signal tracks, peak calls, alignments)
+		  <br>Input track height for each data view in the text box.
+		  <br>EIDs correspond to consolidated epigenomes
+		  <br>If you unselect <i>Ignore unconsolidated epigenome data</i>, unconsolidated epigenomes will be appear in the rows in blue text.		  
+		  <br><b>NOTE</b>: We do not recommend visualizing the consolidated datasets alongside the unconsolidated ones. Preferably visualize the consolidated datasets.
+		  </p>
+		  <p>
+		  <b>To select grid-cells</b> (Selected grid-cells appear blue-grey)
+		  <ul>
+			  <li>Click on a single grid-cell; or
+			  <li>Click and drag across rows and columns of the grid to select a sub-matrix of the multiple grid-cells. 
+			  <li>Click on row or column header to select entire row or column
+			  <li>You can perform each of these actions mutiple times to select multiple disjoint grid-cells, sub-matrices, rows or columns.
+		  </ul>
+		  
+		  </p>
+		  <p>
+		  <b>To unselect grid-cells</b>(Unselected cells appear white)
+		  <ul>
+			<li>Click on selected cell to unselect it
+			<li>Click and drag across selected cells you want to unselect.
+			<li>Click selected row or column headers to unselect them.
+		  </ul>
+          </p>
+		
+	</div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+
