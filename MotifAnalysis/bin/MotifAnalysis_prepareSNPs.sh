@@ -32,7 +32,9 @@ do
     out=${motifData_curLen}/$(basename ${SNPQTL})_motifLen${motifLen}
     mLe=${motifLen}
     echo "source ${source_place}" > ${scriptName}
-    echo "zcat ${SNPQTL} | awk '{snpend="'$1'"+1}{print \"chr\""'$2'"\"\t\""'$1'"\"\t\"snpend}' | grep -v \"chrchr\" | sort | uniq > ${out}.snpsite" >> ${scriptName}
+    #right here when we make the bed file, we need snp-1,snp as SNP was given 1-based
+    ###########
+    echo "zcat ${SNPQTL} | awk '{snpbegin="'$1'"-1}{snpend="'$1'"}{print \"chr\""'$2'"\"\t\"snpbegin\"\t\"snpend}' | grep -v \"chrchr\" | sort | uniq > ${out}.snpsite" >> ${scriptName}
     past_output=${out}.snpsite
     for filter in $(echo ${filters} | sed -n 1'p' | tr ',' '\n')
     do 
