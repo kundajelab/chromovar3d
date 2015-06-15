@@ -1,0 +1,328 @@
+/* color pickup http://www.rapidtables.com/web/color/RGB_Color.htm */
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Questrial);
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
+
+.input-medium {
+  font-size: 0.8em;
+}
+
+#body {
+ margin-left:15px;
+}
+
+#toplogo {
+ position: relative;
+ float:left;
+}
+#toptitle {
+ font-size: 1.em;
+}
+
+#searchbox, #searchtext {
+ position: relative;
+ float: right;
+ padding-right: 12px;
+ font-size: 0.9em;
+}
+
+.navbar {
+  padding: 0px;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 12px;
+  height: auto; 
+}
+
+.navbar-collapse, .dropdown-menu {
+  padding-left: 10px;
+  font-size: 1.0em;
+  font-weight: bold;
+  left: 0;
+  text-align: left;
+}
+
+.jumbotron > p {
+  font-size: 1.1em;
+}
+
+body {
+  padding-top: 10px;
+  -webkit-font-smoothing: antialiased;
+  background-color: white;
+/*  color: #333;*/
+/*  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;*/
+  font-family: Arial, sans-serif, "Helvetica Neue", Helvetica, Roboto;
+/*  font-size: 1em;*/
+  line-height: 1.5; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: helvetica, Questrial, sans-serif;
+  line-height: 1.25em;
+  margin: 1;
+  text-rendering: optimizeLegibility; }
+
+ul, ol {
+  margin: 1;
+/*  padding: 1;*/
+  padding-left: 1.5em;
+   font-size: 0.95em;
+  list-style-type: circle; }
+  section article ul {
+    list-style-type: circle;
+    margin-bottom: 0.75em;
+    padding-left: 1.5em; }
+
+ul ul {
+  font-size: 0.95em;
+  padding-left: 1.5em; }
+
+dl {
+  margin-bottom: 0.75em; }
+  dl dt {
+    font-weight: bold;
+    margin-top: 0.75em; }
+  dl dd {
+    margin: 0; }
+
+ a {
+  -webkit-transition: color 0.1s linear;
+  -moz-transition: color 0.1s linear;
+  transition: color 0.1s linear;
+  color: #477DCA;
+  text-decoration: none; }
+  a:hover {
+    color: #2c5999; }
+  a:active, a:focus {
+    color: #2c5999;
+    outline: none; }
+
+
+h1 {
+  font-weight: bold;
+  color: #663300;
+  font-size: 1.45em; 
+  padding-top: 1.00em;
+  padding-bottom: 0.75em; }
+
+h2 {
+  font-weight: bold;
+  color: #5E8771;
+  font-size: 1.35em;
+  padding-top: 1em;
+  padding-bottom: 1em; }
+
+h3 {
+  font-weight: bold;
+    font-size: 1.35em;
+  padding-top: 0.750em;
+  padding-bottom: 0.75em; }
+
+h4 {
+  font-size: 1.2em; }
+
+h5 {
+  font-size: 1.05em; }
+
+h6 {
+  font-size: 0.95em; }
+
+p {
+  font-size: 0.95em;
+  margin: 0 0 0.75em; }
+
+.highlight {
+  font-size: 5em;
+}
+
+table.tableizer-table {
+  font-size: 1.1em;
+  border: 1px; /* solid #CCC*/
+/*  font-family: Arial, Helvetica, sans-serif*/
+  font-size: 13px;
+} 
+.tableizer-table td {
+  padding: 5px;
+  margin: 4px;
+  border: 1px; /* solid #ccc;*/
+}
+.tableizer-table th {
+/*  background-color: white; */
+  color: black;
+  font-weight: bold;
+}
+
+.tableizer-table > tr.top td { border-top: thin solid black; }
+.tableizer-table > tr.bottom td { border-bottom: thin solid black; }
+.tableizer-table > tr.row td:first-child { border-left: thin solid black; }
+.tableizer-table > tr.row td:last-child { border-right: thin solid black; }
+
+.black-outline {
+  outline: 2px solid black;
+}
+
+.data-table {
+  font-size: 1.0em; 
+  border: 1px solid white;
+}
+
+.data-table tbody  {
+  font-size: 0.8em;   
+}
+
+.data-table thead th:not(.white) {
+  background-color : #8de1b7; /*#649a8c, #31698a;*/
+}
+
+.data-table thead th.white {
+  border: 1px solid white;
+}
+
+.data-table th.white {
+   background-color : white; /*#649a8c, #31698a;*/
+}
+
+
+.expanded-group{
+	background: url("./images/minus.jpg") no-repeat scroll left center transparent;
+	padding-left: 15px !important
+}
+
+.collapsed-group{
+	background: url("./images/plus.jpg") no-repeat scroll left center transparent;
+	padding-left: 15px !important
+}
+
+/*
+.data-table td.rowStick { background-color: #DDD; }
+*/
+
+.data-table th.rotate {
+  height: 230px;
+  white-space: nowrap;
+}
+
+/* for IE */
+.rotatedcol {
+  white-space: nowrap;
+}
+
+.data-table th.rotate > div {
+  transform: 
+    translate(0px, 100px)
+    rotate(270deg);
+    width: 0px;
+}
+
+
+.data-table th.rotate > div > span {
+  border-bottom: 1px solid #ccc;
+}
+
+.data-table td.group {
+    background-color: #D1CFD0;
+    border-bottom: 2px solid #A19B9E;
+    border-top: 2px solid #A19B9E;
+}
+
+.data-table td > .ui-selected {
+    background: white; !important
+}
+
+.ui-selected_to_vis_col {
+    background: #B0C4DE; /*#FFB6C1; !important*/
+}
+
+.ui-selected_to_vis_row {
+    background: #B0C4DE; /*#F0E68C; !important*/
+}
+
+.ui-selected_to_vis {
+    background: #B0C4DE; !important
+}
+
+.ui-selecting:not(.rotate) {
+    background: blue; !important
+}
+
+.data-table td.epgname {
+    background-color:#c2efbc;
+}
+/*
+.data-table th.assayname th.white {
+    background-color:#31698a;
+}
+*/
+/*
+.data-table td.cell {
+  font-size: 0.7em;
+}
+*/
+.data-table td.epgname {
+  border: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.data-table td.epgname.unconsolidated {
+  color: blue;
+}
+
+select.ddl_eid {
+  width: 500px;
+}
+
+select.ddl_assay {
+  width: 200px;
+}
+
+.data-table .selectable.row.rowHover:not(.ui-selected_to_vis):not(.ui-selected_to_vis_col):not(.ui-selected_to_vis_row) { 
+	background-color: #ebebff !important; 
+}
+
+.data-table .selectable.rowHover:not(.ui-selected_to_vis):not(.ui-selected_to_vis_col):not(.ui-selected_to_vis_row)
+	,.data-table .selectable.colHover:not(.ui-selected_to_vis):not(.ui-selected_to_vis_col):not(.ui-selected_to_vis_row) { 
+	background-color: #DDE; 
+}
+
+footer {
+color: #6E6E6E;
+font-size: 12px;
+background: #F2F2F2;
+padding: 5px 0 5px 0;
+border-top: 1px solid #81DAF5;
+
+/*
+footer a {
+color: #999;
+} 
+*/
+
+.caret-up {
+    width: 0; 
+    height: 0; 
+    border-left: 4px solid rgba(0, 0, 0, 0);
+    border-right: 4px solid rgba(0, 0, 0, 0);
+    border-bottom: 4px solid;
+    
+    display: inline-block;
+    margin-left: 2px;
+    vertical-align: middle;
+}
