@@ -16,10 +16,8 @@ cp ${olddir}/metadata.75unrelatedYRI ${outmain}/
 cp -r ${olddir}/TFBS/unifiedPeaksByTF ${outmain}/TFBS/
 mkdir -p ${outmain}/Distal/
 cp /srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-05-30//Distal/DistalQTLs.2015-05-30.ChrGeneDistal.PlusOverlappedRNA.txt ${outmain}/Distal/
-cp ${olddir}/Data/CombinedPeakAnno.gz ${outmain}/Data/CombinedPeakAnno.gz
 #peak data
 cp -r ${olddir}/OverlapEnrichment/Peaks ${outmain}/OverlapEnrichment/
-#remove the qtl peaks
 
 # SNPQTL files
 #=============
@@ -180,7 +178,7 @@ cd ${outmain}/Motif_Data/motifMatches/
 motifs=$(ls MotifMatch_*.bed.gz.OverlapChIPseq.gz | sed 's/MotifMatch_//g' | sed 's/.bed.gz.OverlapChIPseq.gz//g')
 for motif in $motifs 
 do 
-  #associationTest "motif.pouya.Motif."$motif localanalysis 
+  associationTest "motif.pouya.Motif."$motif localanalysis 
   associationTest "motif.pouya.Motif."$motif distal
 done
 
