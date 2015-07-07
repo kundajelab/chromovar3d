@@ -1,5 +1,5 @@
 inTemplate='/srv/gs1/projects/snyder/jzaugg/histoneQTL/hQTL_analysis/PeakData/hMat.norm.ALL.HMARK.peer_lS_PEERS.txt'
-out='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-01-13/Data/CombinedPeakSignal'
+out='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-06-13/Data/CombinedPeakSignal'
 
 get_data=function(inTemplate,hmark,peers,columnsWanted){
 	inFile=gsub('HMARK',hmark,gsub('PEERS',peers,inTemplate))
@@ -27,5 +27,4 @@ write.table(combined,
 	file=out,sep='\t',quote=F,row.names=TRUE,col.names=TRUE)
 system(paste('rm ',out,'.gz',sep=''))
 system(paste('gzip ',out,sep=''))
-
 
