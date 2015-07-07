@@ -23,6 +23,9 @@ TSSRegElt=${annos}/TSSRegEltNodeAnno.txt
 code=/srv/gsfs0/projects/kundaje/users/oursu/code/chromovar3d/GWASnetworks
 }
 
+#bring in the GWAS files
+cp -r /srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-05-30/GWAS_hits_Peyton ${DATA}/
+
 #======================================
 # Annotations
 #======================================
@@ -55,25 +58,25 @@ make_annotations
 #==============
 setup_vars
 zcat -f ${motifdir}/Local/SNPQTLmatrix/SNPQTLmatrix.*.gz | \
-awk -F "\t" -v qtldirec=${qtldir} '{endsnp=$1}{beginsnp=$1-1}{if ($9=="pass") print $2"\t"beginsnp"\t"endsnp"\t"$3","$2":"$1"-"endsnp",Local,"$10"_"$4",NA">qtldirec"/chr"$2".LocalQTLs.bed"}'
+awk -F "\t" -v qtldirec=${qtldir} '{endsnp=$1}{beginsnp=$1-1}{if ($9=="pass") print $2"\t"beginsnp"\t"endsnp"\t"$3","$2":"beginsnp"-"endsnp",Local,"$10"_"$4",NA">qtldirec"/chr"$2".LocalQTLs.bed"}'
 zcat -f ${motifdir}/Distal/DistalQTLs.2015-05-30 | \
 awk -F "\t" -v qtldirec=${qtldir} '{beginsnp=$7-1}{endsnp=$7}{print "chr"$17"\t"beginsnp"\t"endsnp"\t"$1","$17":"beginsnp"-"endsnp",Distal,"$14","$2>qtldirec"/chr"$17".DistalQTLs.bed"}'
 rm ${qtldir}/chrchr.DistalQTLs.bed
 
-####$$$$$$$$$$$$$$$$$
-#$$$$$$$$$$
-
 #also make a file with SNPs sorted by pvalue
 #snp, peak, pvalue
-setup_vars
-zcat -f ${motifdir}/Local/SNPQTLmatrix/SNPQTLmatrix.*.gz | \
-awk -F "\t" '{if ($9=="pass") print $1"\t"$3"\t"$6"\t"$10"_"$4}' | grep -v "mod_gene" | \
-sort -g -k3 > ${qtldir}/pvalueSortedSNPspeakPeak.Local
-zcat -f ${motifdir}/Distal/DistalQTLs.2015-05-30 | \
-awk -F "\t" '{print $7"\t"$1"\t"$4"\t"$2}' | sort | uniq > ${qtldir}/pvalueSortedSNPspeakPeak.Distal
-zcat -f ${qtldir}/pvalueSortedSNPspeakPeak.Local ${qtldir}/pvalueSortedSNPspeakPeak.Distal | sort | uniq > ${qtldir}/pvalueSortedSNPspeakPeak
-python ${code}/SNPQTL_to_dict_bestSNPperPeak.py --snpqtl /srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-06-09/QTLs//pvalueSortedSNPspeakPeak --out /srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-06-09/QTLs//pvalueSortedSNPspeakPeak.dict
+#setup_vars
+#zcat -f ${motifdir}/Local/SNPQTLmatrix/SNPQTLmatrix.*.gz | \
+#awk -F "\t" '{if ($9=="pass") print $1"\t"$3"\t"$6"\t"$10"_"$4}' | grep -v "mod_gene" | \
+#sort -g -k3 > ${qtldir}/pvalueSortedSNPspeakPeak.Local
+#zcat -f ${motifdir}/Distal/DistalQTLs.2015-05-30 | \
+#awk -F "\t" '{print $7"\t"$1"\t"$4"\t"$2}' | sort | uniq > ${qtldir}/pvalueSortedSNPspeakPeak.Distal
+#zcat -f ${qtldir}/pvalueSortedSNPspeakPeak.Local ${qtldir}/pvalueSortedSNPspeakPeak.Distal | sort | uniq > ${qtldir}/pvalueSortedSNPspeakPeak
+#python ${code}/SNPQTL_to_dict_bestSNPperPeak.py --snpqtl /srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-06-09/QTLs//pvalueSortedSNPspeakPeak --out /srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-06-09/QTLs//pvalueSortedSNPspeakPeak.dict
+dict=/srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-06-09/QTLs//pvalueSortedSNPspeakPeak.dict
+cp ${dict} ${DATA}/QTLs//pvalueSortedSNPspeakPeak.dict
 #===============
+
 
 #=======================================
 # Expand in YRI LD the QTLs
@@ -150,32 +153,17 @@ make_detailed_net(){
   local LDthresh=$4
   local script=$5
 
-  annos=/srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits/Annotations/
-  peaks2TSS=${annos}/peaks2TSS.txt
-  tss=${annos}/pointTSS.bed
-  regElements=${annos}/regElts.mergedHistonesDhs.bed
-
-  #testing
-  #infile=${out}.overlapGWAS.bed
-  #outfile=${out}.overlapGWAS.network
-  #pval_thresh=0.00001
-  #LDthresh=0.8
-  #script='test.sh'
+  passFilters=${outfile}.LD${LDthresh}.p${pval_thresh}.txt
 
   echo "zcat -f ${infile} | \
-  awk '{if ((\$19<=${pval_thresh}) && (\$9>=${LDthresh})) print \$0}' > ${outfile}.relevant" >> ${script}
-  echo "python ${code}/network_summary2.py --infile ${outfile}.relevant" >> ${script}
-  echo "zcat -f ${outfile}.relevant.small | sort | uniq > ${outfile}.relevant.small.uniq" >> ${script}
-  #echo "zcat -f ${outfile}.relevant.consolidatedTable.txt | sort | uniq > ${outfile}.relevant.consolidatedTable.uniq.txt" >> ${script}
-  echo "python /srv/gsfs0/projects/kundaje/users/oursu/code/chromovar3d/GWASnetworks/make_GWAS_overlapTable.py --infile ${outfile}.relevant" >> ${script}
-  #chmod 755 ${script}
-  #qsub -o ${script}.o -e ${script} ${script}
-
+  awk '{if ((\$19<=${pval_thresh}) && (\$9>=${LDthresh})) print \$0}' > ${passFilters}" >> ${script}
+  echo "python ${code}/network_summary2.py --infile ${passFilters} --p ${pval_thresh}" >> ${script}
+  echo "zcat -f ${passFilters}.net.pval${pval_thresh} | sort | uniq > ${passFilters}.net.pval${pval_thresh}.uniq" >> ${script}
 }
 
 setup_vars ####
 columns=chrLDSNP_startLDSNP_endLDSNP_QTL,chr:start-end,LocalDistal,LocalPeak,DistalPeak
-GWASPeyton=/srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-05-30/GWAS_hits_Peyton/
+GWASPeyton=${DATA}/GWAS_hits_Peyton/
 gwases=$(echo $(ls ${GWASPeyton}/expanded_LD_geno/rsq_0.8/*/*bed))
 pref=${qtldir}/ALL.LocalandDistalQTLs_expandYRILD
 bed_interest=${pref}.2regElts.2TSS.bed
@@ -198,26 +186,44 @@ do
  sed 's/ /\t/g' > ${out}.overlapGWAS.bed" >> ${s} #this gives us the QTL SNPs to keep (we'll keep them + all their LD)
  echo "echo ${columns},R2,LDSNP,RegEltLocal,RegEltDistal,TSSLocal,TSSDistal_GWASchr_GWASstart_GWASend_GWAStagSNPID_GWASassociationPval | \
  sed 's/_/\t/g' | sed 's/_/\t/g' > ${out}.overlapGWAS.bed.columns" >> ${s}
- make_detailed_net ${out}.overlapGWAS.bed ${out}.overlapGWAS.bed.net 0.00001 0.8 ${s}
+ make_detailed_net ${out}.overlapGWAS.bed ${out}.overlapGWAS 0.00001 0.8 ${s}
  chmod 755 ${s}
  qsub -o ${s}.o -e ${s}.e ${s}
 done
 
-#1 big gwas table
+
+### TABLE
+#######################################
+LD=0.8
+p=0.00001
+
 setup_vars ###
-GWASPeyton=/srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-05-30/GWAS_hits_Peyton/
+GWASPeyton=${DATA}/GWAS_hits_Peyton/
 gwases=$(echo $(ls ${GWASPeyton}/expanded_LD_geno/rsq_0.8/*/*bed))
 for gwas in ${gwases};
 do
   echo $gwas 
   out=${gwasdir}/overlapQTL_$(basename ${gwas} | sed 's/.bed//g')/overlapQTL_$(basename ${gwas}).LD08_p5.bed
-  zcat -f ${out}.overlapGWAS.bed.net.relevant.table.txt | \
-  awk -v gwasname=$(echo $(basename ${gwas} | sed 's/_pruned_rsq_0.8_expanded_rsq_0.8.bed//g')) '{print $0"\t"gwasname}' > ${out}.GWAStable.txt
+  zcat -f ${out}.overlapGWAS.LD${LD}.p${p}.txt | \
+  awk '{print $18"SPLIT"$7"SPLIT"$8"SPLIT"$11"SPLIT"$12"SPLIT"$13"SPLIT"$14"SPLIT"$6"\t"$4}' | \
+  sort -k1,1 | bedtools groupby -g 1 -c 2 -o distinct -i stdin | \
+  sed 's/SPLIT/\t/g' > ${out}.overlapGWAS.LD${LD}.p${p}.GWAStable.txt_init
+  zcat -f ${out}.overlapGWAS.LD${LD}.p${p}.GWAStable.txt_init | awk -v gwasname=$(echo $(basename ${gwas} | sed 's/_pruned_rsq_0.8_expanded_rsq_0.8.bed//g')) '{print $0"\t"gwasname}' > ${out}.overlapGWAS.LD${LD}.p${p}.GWAStable.txt
+  rm ${out}.overlapGWAS.LD${LD}.p${p}.GWAStable.txt_init
 done
 
-columns="GWAStagSNP_GWASp_LocalRegElt,DistalRegElt,LocalGene,DistalGene_PeaksAtLocalRegElt_PeaksAtDistalRegElt_GenesAtLocalRegElt_GenesAtDistalRegElt_LocalQTLSNP;affectedPeak;pvalue;LD=GWASSNP R2_DistalQTLSNP;affectedPeak;pvalue;LD=GWASSNP R2_Disease"
-echo ${columns} | sed 's/_/\t/g' > ${gwasdir}/GWAStable.sig5.txt
-zcat -f ${gwasdir}/overlapQTL_*/*GWAStable.txt >> ${gwasdir}/GWAStable.sig5.txt
+table_file=${gwasdir}/GWAStable.pval5.simpleTable.txt
+echo "GWAStagSNP_LocalPeak_DistalPeak_LocalRegElt_DistalRegElt_LocalGene_DistalGene_QTLType_QTLSNPs_Disease" | \
+sed 's/_/\t/g' > ${table_file}
+zcat -f ${gwasdir}/overlapQTL_*/*overlapGWAS.LD0.8.p0.00001.GWAStable.txt >> ${table_file}
+
+
+
+
+
+
+
+
 
 
 

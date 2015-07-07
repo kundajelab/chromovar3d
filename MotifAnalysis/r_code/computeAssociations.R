@@ -48,8 +48,10 @@ readScoredRegion2Peak=function(scoredRegion2peak.f,motifLen){
         }
         #add name of the scored region
 	chrs=as.character(scoredRegion2peak$chr)
-	starts=as.numeric(as.character(scoredRegion2peak$snp.position))-motifLen+1
-	ends=as.character(as.numeric(as.character(scoredRegion2peak$snp.position))+motifLen)
+	#### corrected snp positions!!
+	CORRECTED=-1 #because snp coords were 1based, but the scored region comes from a bed file
+	starts=as.numeric(as.character(scoredRegion2peak$snp.position))-motifLen+1+CORRECTED
+	ends=as.character(as.numeric(as.character(scoredRegion2peak$snp.position))+motifLen+CORRECTED)
         scoredRegion.names=paste('chr',chrs,'_',as.character(starts),'_',as.character(ends),sep='')
 	#build the scoredRegion2Peak data structure
         scoredRegion2peak=cbind(scoredRegion2peak,
@@ -98,8 +100,8 @@ getSNPregionsWithMotifMatch=function(matches.f,correlation_result){
         require(GenomicRanges)
 
 	#make range for matches
-        m_data=read.table(matches.f) #matches bed file
-        motif_matches=GRanges(seq=m_data[,1],ranges=IRanges(as.numeric(as.character(m_data[,2])),end=as.numeric(as.character(m_data[,3]))))
+        m_data=read.table(matches.f) #matches bed file              #+1 b/c granges is 1based          #end included in interval, and 1based from bed already                              
+        motif_matches=GRanges(seq=m_data[,1],ranges=IRanges(as.numeric(as.character(m_data[,2]))+1,end=as.numeric(as.character(m_data[,3]))))
 
         #make range for snps
 	snpbed=data.frame(do.call(rbind,strsplit(as.character(correlation_result$scoredRegionName),'_')))
@@ -107,7 +109,7 @@ getSNPregionsWithMotifMatch=function(matches.f,correlation_result){
         if (length(snpbed.dupli)>0){
            snpbed=snpbed[-snpbed.dupli,]
         }
-	snps=GRanges(seq=snpbed[,1],ranges=IRanges(as.numeric(as.character(snpbed[,2])),
+	snps=GRanges(seq=snpbed[,1],ranges=IRanges(as.numeric(as.character(snpbed[,2]))+1,
                 end=as.numeric(as.character(snpbed[,3])),names=paste(snpbed[,1],'_',snpbed[,2],'_',snpbed[,3],sep='')))
 
         #overlap them to get motif matches

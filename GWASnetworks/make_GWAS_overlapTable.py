@@ -33,7 +33,8 @@ def main():
 		local_qtl_type='NA'
 		distal_qtl_type='NA'
 		#print items
-		l_d_combo='LocalElt:'+RegEltLocal+',DistalElt:'+RegEltDistal#+',LocalGene:'+TSSLocal+',DistalGene:'+TSSDistal
+		l_d_combo='Local:'+LocalPeak+'.Distal:'+DistalPeak
+		#l_d_combo='LocalElt:'+RegEltLocal+',DistalElt:'+RegEltDistal#+',LocalGene:'+TSSLocal+',DistalGene:'+TSSDistal
 		if l_d_combo not in d.keys():
 			d[l_d_combo]={}
 			#gwas data
@@ -142,20 +143,21 @@ def main():
 			first=True
 			for local_qtl_type in d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'].keys():
 				for QTLSNP in d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][local_qtl_type].keys():
-					#for i in range(len(d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][local_qtl_type][QTLSNP]['p'])):
 					if True:
 						if not first:
 							localsnp+='|'
 						localsnp+=QTLSNP+DELIMITER
 						localsnp+=d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][local_qtl_type][QTLSNP]['peak']+DELIMITER
 						localsnp+=str(d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][local_qtl_type][QTLSNP]['p'])+DELIMITER
-						first2=True
+						#keep 1 representative GWAS
+						gwas_mostLD_withQTL='TBA'
+						mostLD_withQTL=0
 						for gwas_coords in d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][local_qtl_type][QTLSNP]['LD'].keys():
-							if not first2:
-								localsnp+=','
-							first2=False
-							localsnp+='LD='+gwas_coords+' '+d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][local_qtl_type][QTLSNP]['LD'][gwas_coords]
-							#print 'LD='+gwas_coords+' '+d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][QTLSNP]['LD'][gwas_coords]
+							r2=float(d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Local'][local_qtl_type][QTLSNP]['LD'][gwas_coords])
+							if r2>mostLD_withQTL:
+								mostLD_withQTL=r2 
+								gwas_mostLD_withQTL=gwas_coords
+						localsnp+='LD='+gwas_mostLD_withQTL+' '+str(mostLD_withQTL)
 						localsnp+=DELIMITER
 						first=False
 			outtext+=localsnp+'\t' 
@@ -177,18 +179,21 @@ def main():
 						distalsnp+=QTLSNP+DELIMITER
 						distalsnp+=d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Distal'][distal_qtl_type][QTLSNP]['peak']+DELIMITER
 						distalsnp+=str(d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Distal'][distal_qtl_type][QTLSNP]['p'])+DELIMITER
-						first2=True
-						for gwas_coords in d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Distal'][distal_qtl_type][QTLSNP]['LD'].keys():
-							if not first2:
-								localsnp+=','
-							first2=False
-							distalsnp+='LD='+gwas_coords+' '+d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Distal'][distal_qtl_type][QTLSNP]['LD'][gwas_coords]
+						#keep 1 representative GWAS
+						gwas_mostLD_withQTL='TBA'
+						mostLD_withQTL=0
+						for gwas_coords in d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Distal'][local_qtl_type][QTLSNP]['LD'].keys():
+							r2=float(d[l_d_combo]['GWAS'][GWAStagSNPID]['QTL_SNP']['Distal'][local_qtl_type][QTLSNP]['LD'][gwas_coords])
+							if r2>mostLD_withQTL:
+								mostLD_withQTL=r2 
+								gwas_mostLD_withQTL=gwas_coords
+						distalsnp+='LD='+gwas_mostLD_withQTL+' '+str(mostLD_withQTL)
 						distalsnp+=DELIMITER
 						first=False
 				outtext+=distalsnp 
 			out.write(outtext+'\n')
 			print outtext
-			#print "----------"
+			print "----------"
 	#print d	
 
 def get_best_qtl(d,localdistal,qtl_type):

@@ -64,7 +64,7 @@ heatmap_enrichments=function(data,out,meth,top_value){
 }
 
 overlapEnrichment_distalQTL=function(){
-  enrichfiles='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-05-30/OverlapEnrichment/ENRICHDIR/ENRICHPREF'
+  enrichfiles='/srv/gsfs0/projects/snyder/oursu/histoneQTL/motif_analysis/results/2015-06-13/OverlapEnrichment/ENRICHDIR/ENRICHPREF'
   enrichments=c('TFBS_overlap_','Motif_overlap_','MotifCorrelatedLocal_overlap_') #add in disrupted motif overlaps, and hQTL overlaps
 
   hmarks=c('H3K27AC','H3K4ME1','H3K4ME3')

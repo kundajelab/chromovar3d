@@ -100,7 +100,8 @@ do
     counter=`expr ${counter} + 1`
     chmod 711 ${scoring_cur}
     #qsub -l hostname=scg3-0-* -o ${scoring_cur}.o -e ${scoring_cur}.e ${scoring_cur}
-    qsub -wd /srv/gsfs0/scratch/oursu/ -l hostname=scg3-0-* -o ${scoring_cur}.o -e ${scoring_cur}.e ${scoring_cur}
+    #qsub -wd /srv/gsfs0/scratch/oursu/ -l hostname=scg3-0-* -o ${scoring_cur}.o -e ${scoring_cur}.e ${scoring_cur}
+    qsub -wd /srv/gsfs0/scratch/oursu/ -o ${scoring_cur}.o -e ${scoring_cur}.e ${scoring_cur}
 done < ${metadata}
 
 

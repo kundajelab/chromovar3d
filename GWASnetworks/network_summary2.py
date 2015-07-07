@@ -3,10 +3,12 @@ import os
 import pickle
 import re
 import pdb
+import math
 
 def main():
 	parser=OptionParser()
 	
+	parser.add_option('--p',dest='p',default='5')
 	parser.add_option('--infile',dest='infile',default='/srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-05-30//gwasOverlaps/overlapQTL_EUR.CD_pruned_rsq_0.8_expanded_rsq_0.8/overlapQTL_EUR.CD_pruned_rsq_0.8_expanded_rsq_0.8.bed.LD08_p5.bed.overlapGWAS.network.relevant')
 	parser.add_option('--peak_snp_dict',dest='di',default='/srv/gsfs0/projects/snyder/oursu/histoneQTL/GWAS_hits_2015-06-09/QTLs//snp2pvalue.2015-06-09.LocalAndDistal.dict')
 	opts,args=parser.parse_args()
@@ -15,16 +17,19 @@ def main():
 	#pdb.set_trace()
 	print 'loaded dictionary'
 
-	out=open(opts.infile+'.small','w')
-	outtable=open(opts.infile+'.consolidatedTable.txt','w')
-	outlabels=open(opts.infile+'.small.labels','w')
-	outcolors=open(opts.infile+'.small.colors','w')
+	out=open(opts.infile+'.net.'+'pval'+opts.p,'w')
+	#outtable=open(opts.infile+'.consolidatedTable.txt','w')
+	outlabels=open(opts.infile+'.net.labels','w')
+	outcolors=open(opts.infile+'.net.colors','w')
 	#out.write('node1\tnode2\tLocalDistal\tQTLType\n')
 	net={}
 	labels={}
 	colors={} #reg elt, gene or gwas
 	for line in open(opts.infile,'r').readlines():
 		items=line.strip().split('\t')
+		gwasp=float(items[18])
+		if gwasp>(float(math.pow(10,(-float(opts.p))))):
+			continue
 		#print items
 		#the qtl snp
 		snp=items[3]
@@ -174,7 +179,7 @@ def main():
 				for possible_local_qtl_type in net[local_peak]['snps'].keys():
 					if distalsnp in net[local_peak]['snps'][possible_local_qtl_type]:
 						out.write(distalsnp+'\t'+local_peak+'\t'+'Local'+'\t'+possible_local_qtl_type+'\t.'+'\n')
-						outtable.write(gwas+'\t'+distalsnp+'\t'+local_peak+'\t'+'Local'+'\t'+possible_local_qtl_type+'\t.'+'\n')
+						#outtable.write(gwas+'\t'+distalsnp+'\t'+local_peak+'\t'+'Local'+'\t'+possible_local_qtl_type+'\t.'+'\n')
 		
 		for gwas in net[local_peak]['gwas']:
 			#connect it it any leftover local snp
@@ -187,7 +192,7 @@ def main():
 					out.write('GWAS:'+gwas+'\t'+snp+'\t'+'LD'+'\t'+'NA\t.'+'\n')
 					if snp not in snps_added:
 						out.write(snp+'\t'+local_peak+'\t'+'Local'+'\t'+possible_local_qtl_type+'\t.'+'\n')
-						outtable.write(gwas+'\t'+snp+'\t'+local_peak+'\t'+'Local'+'\t'+possible_local_qtl_type+'\t.'+'\n')
+						#outtable.write(gwas+'\t'+snp+'\t'+local_peak+'\t'+'Local'+'\t'+possible_local_qtl_type+'\t.'+'\n')
 	#write node labels
 	outlabels.write('node\tlabel\n')
 	outcolors.write('node\tcolor\n')
