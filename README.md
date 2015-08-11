@@ -1,5 +1,6 @@
 **Code from the chromatin variation 3d project**
 
+By Oana Ursu
 Contact: oursu@stanford.edu
 
 **Contents**
@@ -20,4 +21,4 @@ Contact: oursu@stanford.edu
 
 **More code from this paper**
 
-For code related to the QTL calling, and HiC quantification and enrichment refer to http://www.zaugg.embl.de/data-and-tools/distal-chromatin-qtls/
+For code related to the QTL calling, and HiC quantification and enrichment refer to Judith Zaugg's page at http://www.zaugg.embl.de/data-and-tools/distal-chromatin-qtls/
