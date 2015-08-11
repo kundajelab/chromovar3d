@@ -1,6 +1,7 @@
 **Code from the chromatin variation 3d project**
 
 By Oana Ursu
+
 Contact: oursu@stanford.edu
 
 **Contents**
