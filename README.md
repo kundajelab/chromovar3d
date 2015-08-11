@@ -18,4 +18,6 @@ Contact: oursu@stanford.edu
 
 - **peakCalling** - code for processing the histone mark data for H3K4me1, H3K4me3, H3K27ac
 
+**More code from this paper**
+
 For code related to the QTL calling, and HiC quantification and enrichment refer to http://www.zaugg.embl.de/data-and-tools/distal-chromatin-qtls/
