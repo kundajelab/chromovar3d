@@ -4,7 +4,7 @@ Contact: oursu@stanford.edu
 
 **Contents**
 
-- **browserTracks** - code for creating the browser tracks displayed at www.mitra.stanford.edu/chromovar3d
+- **browserTracks** - code for creating the browser tracks displayed at http://mitra.stanford.edu/kundaje/chromovar3d
 
 - **DNase** - code for processing the DNase data
 
@@ -17,3 +17,5 @@ Contact: oursu@stanford.edu
 - **SNPs** - code for merging together the SNP set used in this analysis
 
 - **peakCalling** - code for processing the histone mark data for H3K4me1, H3K4me3, H3K27ac
+
+For code related to the QTL calling, and HiC quantification and enrichment refer to http://www.zaugg.embl.de/data-and-tools/distal-chromatin-qtls/
