@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+
+<h2>DNase analysis</h2>
+<p>
+Contact: oursu@stanford.edu
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/DNase" target="_blank">DNase</a> </li>
+            <li>Code used for this analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/tree/master/DNase" target="_blank">https://github.com/kundajelab/chromovar3d/tree/master/peakCalling</a> <br>
+              A full script recapitulating the whole analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/blob/master/DNase/DNase_analysis.sh" target="_blank">https://github.com/kundajelab/chromovar3d/blob/master/DNase/DNase_analysis.sh</a></li>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+data - contains all analysis, with the following subdirectories:
+
+data/Degner_mapped_reads/eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/ - the reads as mapped in Degner et al. (this is hg18)
+
+alignments and processing
+data/hg19 - data and analysis mapped to hg19, with the following subdirectories:
+data/hg19/liftOver - reads from Degner et al. lifted over to hg19
+data/hg19/shiftedReads/ - reads shifted by 75 bp depending on the strand
+
+peaks
+data/hg19/peaks/subsampled/ - peaks called on each individual
+data/hg19/peaks/subsampled/mergedPeaks_TrimFromSummit - peaks in each individual were trimmed to be 100bp long centered on the summit, then these peaks were merged across individuals
+final list of peaks (before selecting the top 200 000 peaks): data/hg19/peaks/subsampled/mergedPeaks_TrimFromSummit/DNase_TrimFromSummit.mergeBedremoveBlacklist_Log10PvalueThreshold_5.gz
+
+signal
+data/hg19/subsampled/align2rawsignal/ - raw signal, .mat files.
+for bigwig files, refer to the GEO submission
+
+raw data matrix of mean signal per peak in each individual: data/hg19/subsampled//align2rawsignal/extractSignal/DNase_removeBlacklist_Log10PvalueThreshold_5_DATA_MATRIX
+</pre>
+
+      </div>
+
+<h2>Methods</h2>
+
+<p>
+We downloaded DNaseI data for 70 individuals from the (http://www.ncbi.nlm.nih.gov/pubmed/22307276), as aligned reads (hg18 assembly) from: http://eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/. We converted read coordinates to hg19 using LiftOver (https://genome.ucsc.edu/cgi-bin/hgLiftOver). For further analysis, we only considered the reads mapping to chromosomes 1-22, X and Y, since for chrM we expected no histone mark signal.
+</p>
+<p>
+To call DNase peaks, we first shifted reads by 75 base pairs (75bp to the left for reads on plus strand and 75bp to the right for reads on the minus strand), leading to expected peak sizes of 150bp, and then called peaks using MACS2 on pooled replicates (subsampled to 35M reads to ensure comparable sequencing depths across samples), with the following parameters: --nomodel option, --shiftsize=75 --pvalue 1e-2. We trimmed peaks in each individual to be 100bp long, centered on the peak summit provided by MACS (Zhang et al. 2008) (column 10), and removed peaks overlapping blacklisted regions of the genome. We merged the trimmed peaks across individuals, and filtered peaks whose minimum p-value across all individuals was higher than 1e-5. This filters out peaks that have bad quality in all individuals.
+</p>
+
+<p>To generate the signal used for QTL analysis, for each peak in the final set of peaks, we extract the mean signal in each individual, as computed by align2rawsignal (parameters: kernel (k)=epanechnikov, fragment length (l)=150, smoothing window (w)=150, normFlag(n)=5, mapFilter (f)=0) followed by extractSignal.
+</p>
+
+<p>Since previous studies have reported around 200 000 DHS peaks in each cell type, we decided to use the top 250000 peaks (with regard to mean signal across individuals) for our QTL study.
+</p>
+
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+

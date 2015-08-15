@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+
+<h2>ChIA-PET</h2>
+<p>
+Contact: doug.phanstiel@gmail.com
+</p>
+
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/ChIA-PET" target="_blank">ChIA-PET</a> </li>
+           </ul>
+           <br>
+           <p>mango - ChIA-PET analysis with mango</p>
+
+      </div>
+
+<h2>Methods</h2>
+
+<p>
+For the best possible accuracy and sensitivity, fastq files for all biological and technical replicates were combined. ChIA-PET data analysis was carried out by software written in-house (Phanstiel et al.). Each read in the paired-end fragments (PET) was trimmed to remove linker sequences. PETs without one linker at each end were removed, as were PETs with opposite linkers (i.e. AB or BA). The resulting PETs were split into individual reads and aligned to the genome using Bowtie using the following settings: -S -v 0 -k 1 --sam-nohead --mapq 40 -m 1 (Langmead et al. 2009). Aligned reads were filtered to remove duplicates and reads that did not map uniquely to the human genome.  The resulting reads were used to call peaks using MACS2 using the following settings: --nomodel --shiftsize 100 -f BED --p 0.00001 (Zhang et al. 2008).
+</p>
+<p>
+In order to call significant interactions all PETs with a distance > 1Mb were removed.  A minimum distance cutoff was established by determining the shortest distance where less than 5% of PETs were estimated to arise from self-ligation based on orientation of linker sequences (Heidari et al. 2014). PETs that did not link two peaks were removed and PETs were grouped into putative interactions. Using these putative interactions we estimated the probability of observing a single PET linking two peaks as a function of distance and the number of reads falling into each of the peaks. PETs and all possible pairs of peaks were binned by genomic distance and joint peaks depth (the product of the number of reads in each peak).  For each bin the probability of observing an interaction was estimated.  These probabilities were fit using a spline fitting procedure.  The resulting probabilities were used to calculate p-values for each putative interacting using the binomial distribution.  The p-values of all possible interactions between pairs of peaks were adjusted using the Benjamini-Hochberg (Hochberg and Benjamini, 1990) method and filtered to a false discovery rate (FDR) of 0.05. These calculations are too stringent since the models were built using the observed data, which also contained true interactions.  Therefore, interaction with p-values less than 1 divided by the total number of possible interactions, were removed and the probability models and p-values were recalculated. Significant interactions with less than 2 PETs (if any) were removed.
+</p>
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+

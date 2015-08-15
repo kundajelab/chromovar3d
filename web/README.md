@@ -1,2 +1,2 @@
-# chromvar2
-Web page for chromvar2
+# chromovar3d
+Web page for chromovar3d

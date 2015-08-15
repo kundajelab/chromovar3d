@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+
+<h2>Personal genomes</h2>
+<p>
+Contact: oursu@stanford.edu
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/genomes" target="_blank">Personal genomes</a> </li>
+            <li>Code used for this analysis is at : <a target="_blank" href="https://github.com/kundajelab/Personal_genome_mapping" target="_blank">https://github.com/kundajelab/Personal_genome_mapping</a> <br>
+              A full script recapitulating the whole analysis is at (for SNP set) : <a target="_blank" href="https://github.com/kundajelab/chromovar3d/tree/master/SNPs" target="_blank">https://github.com/kundajelab/chromovar3d/tree/master/SNPs</a></li>
+              <p></p>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+Genotype data
+vcf/all_YRI_compiled - the vcf files used in this analysis
+
+Imputation data
+imputed - files related to the imputation
+imputed/imputation_files - outputs from shapeit2
+imputed/imputed_vcf - intermediary files for making VCF files from the imputation data
+imputed/VCF - VCF files from the imputation data
+
+Personal genomes 
+personal_genomes - personal genome fasta files
+personal_genomes/Fasta - fasta files for personal genomes (without the imputed individuals)
+personal_genomes/imputedFasta - fasta files for personal genomes (for the imputed individuals)
+</pre>
+
+      </div>
+
+<h2>Methods</h2>
+
+<h3>Genotype data sources</h3>
+
+<p>
+In this study, we used genotype data from 4 sources:
+<ul>
+  <li>1. 1000 Genomes phase1 sequenced individuals: 54 individuals, 38 248 806 SNPs</li>
+  <li>2. 1000 Genomes phase3 sequenced (and imputed at unsequenced Phase1 sites): 22 individuals, 32 684 112 items from sequencing, 34 599 377 SNPs imputed</li>
+  <li>3. Imputed: 28 individuals, 34 599 377 SNPs with info above 0.8 </li>
+  <li>4. Our previous study (Kasowski et al. 2013): 5 individuals, 38 248 806 SNPs. Here, genotypes were derived from published personal genomes, for Phase1 sites</li>
+</ul>
+</p>
+
+<h3>Individuals and SNP set used for QTL analysis</h3>
+<p>We merged SNPs from all 4 sources across individuals. For individuals sequenced in Phase3, for whom we also had imputation data, we prioritized the sequencing data (if not unknown “./.”) over the imputation. We filtered out multi-allelic SNPs, keeping only the bi-allelic ones. In addition we filtered out any SNP that had a minor allele-frequency of less than 5% in our set of individuals. Due to insufficient genotype quality, we also excluded the individual NA19139 from the QTL analysis.
+</p>
+<p>This yields 109 individuals in this study. However, although we used all 109 individuals for setting up the genotype matrix and for peak calling (see the section of ChIP-seq below), we only used for subsequent analysis 75 of these individuals, after filtering to keep only unrelated individuals into the QTL analysis.
+</p>
+
+<h3>Imputation</h3>
+<p>All individuals included in the study as well as first degree relatives with Omni2.5 genotype data from the 1000 Genomes Project (1000 Genomes Project Consortium et al. 2012) were jointly phased using shapeit2 (v2.r769). Variants were imputed using the full phase 1 1000 Genomes reference panel haplotypes using IMPUTE2 (Howie et al. 2009) (v2.2.2). Imputed variants were then subset to the individuals with no full genome sequencing data available.
+</p>
+<p>To be included in our study, imputed SNPs had to pass an IMPUTE2 (Howie et al. 2009) information metric threshold of ≥ 0.8. For each SNP included, we then selected for each individual the genotype with the maximum likelihood. If the same maximum likelihood was assigned to multiple genotypes, we prioritized 0/0, 0/1 and 1/1. We constructed personal genomes for the imputed individuals by adding in 1) phased genotypes for SNPs experimentally measured on the Omni arrays (chr1-22 and chrX), with phasing information inferred using shapeit2) unphased genotypes for SNPs imputed (chr1-22), which were assigned randomly to maternal/paternal haplotypes.
+</p>
+
+<h3>Histone mark data processing</h3>
+<p>
+We aligned reads to personal genomes as previously described (Kasowski et al. 2013). We specifically used SNPs from chr1-22, and chrX meaning no SNPs for chrY and chrM. We created personal genomes by adding to the reference genome all SNPs described in the Genotype Data section, to produce a diploid (maternal + paternal) genome for each individual.
+</p>
+<p>Note about chrX: Personal genomes contain the X chromosome on both paternal and maternal genome, even for males. For males, the X chromosome is kept on the paternal genome, so that the pseudo-autosomal SNPs can be inserted with both genotypes for males (in reality, one allele is on chrX, and one is on chrY). Thus, for chrX SNPs in males:
+<ul>
+  <li>if 1 genotype was given, then the SNP is not in the pseudo-autosomal region. We added the SNP to the maternal chrX.</li>
+  <li>if 2 genotypes were given, then the SNP is in the pseudo-autosomal region. We added the SNP alleles one to the maternal chrX and one to the paternal chrX.</li>
+</ul>
+</p>
+
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+

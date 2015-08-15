@@ -1,17 +1,18 @@
  
     <div class="container-fluid" id="top">
-      <div style="text-align:left" id="toplogo"> <a href="./index.html"> <img src="./images/logo5.png" height="55" width="570" alt="Roadmap Epigenomics"> </img> </a>
+      <div style="text-align:left" id="toplogo"> <!--<a href="./index.html"> <img src="./images/logo5.png" height="55" width="570" alt="Roadmap Epigenomics"> </img> </a>-->
       </div>
 
+      <h1>Genetic control of chromatin states in humans involves local and distal chromosomal interactions</h1>
+<!--
       <form class="navbar-form navbar-right" role="search" id="searchbox" method="get" action="http://www.google.com/search">
         <div class="form-group"> 
           <input type="text" name="q" value="" class="form-control" placeholder="Search" id="searchtext">
         </div>
-        <button type="submit" class="btn btn-default" name="sitesearch" value="egg2.wustl.edu/roadmap/web_portal/">Submit</button>
+        <button type="submit" class="btn btn-default" name="sitesearch" value="http://mitra.stanford.edu/kundaje/chromovar3d/">Submit</button>
       </form>
-
+-->
     </div>
-
     <div class="navbar navbar-default" role="navigation">
 
       <div class="container-fluid">
@@ -25,8 +26,26 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="./index.html">Home /<br>Grid</a></li>
-            <li><a href="./meta.html">Metadata</a></li>
+            <li><a href="./index.html">Visualization<br>/ Home</a></li>
+            <li><a href="./histone.html">Histone<br>marks</a></li>
+            <li><a href="./dnase.html">DNaseI-seq</a></li>
+            <li><a href="./rnaseq.html">RNASeq</a></li>
+            <li><a href="./hic.html">HiC</a></li>
+            <li><a href="./chiapet.html">ChIA-PET</a></li>
+            <li><a href="./qtls.html">QTLs</a></li>
+            <li><a href="./genomes.html">Personal<br>genomes</a></li>
+            <li class="dropdown">
+              <a href="./tfbs.html">TF binding /<br>Motif analysis</a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="./tfbs.html#TF">Transcription factor binding</a></li>
+                <li><a href="./tfbs.html#motif">Motif analysis</a></li>
+              </ul>
+            </li>
+              <!--<li><a href="./motifs.html">Motifs</a></li>-->
+            <li><a href="./gwas.html">GWAS</a></li>
+            <li><a href="./metadata.html">Metadata</a></li>
+            
+<!--
             <li class="dropdown">
               <a href="#rep" class="dropdown-toggle" data-toggle="dropdown">Processed<br>Data<span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -34,79 +53,12 @@
                 <li><a href="./processed_data.html#ChipSeq_DNaseSeq">ChIP-seq and DNase-seq uniform reprocessing for consolidated epigenomes</a></li>
                 <li><a href="./processed_data.html#RNAseq_uni_proc">RNA-seq uniform processing and quantification for consolidated epigenomes</a></li>
                 <li><a href="./processed_data.html#MethylData">Methylation data cross-assay standardization and uniform processing for consolidated epigenomes</a></li>
-<!--
-                <li><a href="./processed_data.html#diffMethyl">Differentially Methylated Regions (DMRs) and DNA methylation variation</a></li>
--->
-              </ul>
-            </li>
-
-            <li class="dropdown">
-              <a href="#imp" class="dropdown-toggle" data-toggle="dropdown">Imputed<br>Data <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="imputed.html#imp_sig">Imputed signal tracks</a></li>
-                <li><a href="imputed.html#imp_peakcall">Imputed peak calls</a></li>
-                <li><a href="imputed.html#chr_imp">Chromatin state models using imputed data</a></li>
-              </ul>
-            </li>
-
-            <li class="dropdown">
-              <a href="#chr" class="dropdown-toggle" data-toggle="dropdown">Chromatin<br>State<br>Learning<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="chr_state_learning.html#core_15state">Core 15-state model</a></li>
-                <li><a href="chr_state_learning.html#exp_18state">Expanded 18-state model</a></li>                
-                <li><a href="imputed.html#chr_imp">25-state model using imputed data</a></li>
-<!--
-                <li><a href="chr_state_learning.html#celltype_spec">Cell-type specificity and switching of chromatin states</a></li>                
-                <li><a href="chr_state_learning.html#id_coord">Identifying coordinated changes in chromatin marks during development</a></li>                
--->
-              </ul>
-            </li>
-<!--
-            <li class="dropdown">
-              <a href="#methyl" class="dropdown-toggle" data-toggle="dropdown">Methylation<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="methylation.html">6. Differentially Methylated Regions (DMRs) and DNA methylation variation</a></li>
               </ul>
             </li>
 -->
-            <li class="dropdown">
-              <a href="#epg_cluster" class="dropdown-toggle" data-toggle="dropdown">Epigenomes<br>Clustering<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="epg_clustering.html">Clustering of epigenomes reveals common lineages, common properties</a></li>
-              </ul>
-            </li>
-
-
-            <li class="dropdown">
-              <a href="#DNase_reg" class="dropdown-toggle" data-toggle="dropdown">DNaseI-accessible<br>Regulatory<br>Regions<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="DNase_reg.html#delieation">Delineation of DNaseI-accessible regulatory regions</a></li>
-                <li><a href="DNase_reg.html#clustering">Clustering of DNaseI-accessible regulatory regions to identify modules of coordinated activity</a></li>
-              </ul>
-            </li>
-
-
-            <li class="dropdown">
-              <a href="#predict_reg_motif" class="dropdown-toggle" data-toggle="dropdown">Predicting<br>Regulators<br>and Motifs<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="predict_reg_motif.html#predicting_reg">Predicting regulators active in each tissue / cell type / lineage</a></li>
-                <li><a href="predict_reg_motif.html#DNA_motif">DNA Motif Positional Bias in Digital Genomic Footprinting Sites</a></li>
-<!--
-                <li><a href="predict_reg_motif.html#comparing_gen">Comparing Digital Genomic Footprinting with DNA motifs that are predictive of epigenomic modification</a></li>
--->
-              </ul>
-            </li>
-
-
-            <li class="dropdown">
-              <a href="#unnamed" class="dropdown-toggle" data-toggle="dropdown">Disease<br>Variant<br>Interpretation<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="tissue_sp_act.html">Tissue-specific activity of disease-associated regions</a></li>
-              </ul>
-            </li>
 
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
 

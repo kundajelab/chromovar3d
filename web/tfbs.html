@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+<a name="TF"></a>
+<h2>TF binding</h2>
+<p>
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/TFBS" target="_blank">TF binding</a> </li>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+BLANK
+</pre>
+
+      </div>
+
+
+<a name="motif"></a>
+<h2>Motif analysis</h2>
+<p>
+Contact: oursu@stanford.edu
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/motifs" target="_blank">Motif analysis</a> </li>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+results/2015-06-13 contains the analysis and files, and has the following subdirectories.
+
+Input data subdirectories:
+Data - some basic data used for the motif analysis
+Motif_Data - contains fasta files with the sequences of each individual at the sites scored in the motif analysis (see methods)
+Local - contains QTL matrices related to the local QTLs as used for the motif analysis
+Distal - contains QTL matrices related to the distal QTLs as used for the motif analysis
+TFBS - contains the TFBS used in this analysis
+Motif_Data/motifMatches - the motif matches in the genome (defined as matches to the reference genome with a log odds score >=0)
+
+Analysis files:
+Motif_analysis_results - contains the main motif analysis. The directories follow the format Motif_Analysis_${hmark}/motif.pouya.Motif.${motifName}scanThresh0 which contains two directories: 1) Scores, which contains the motif scores in each individual's genome and 2) Correlations, which contains the correlation analysis between motif and peak/dhs/RNA signal 
+CrossTFanalysis - motif analysis over all histone marks, dhs and RNA and all transcription factors. It contains the motif analysis files following Benjamini Hochberg correction
+OverlapEnrichment - overlap enrichment analysis
+signal - signal extracted at the disrupted motifs correlating with H3K27ac signal
+</pre>
+
+      </div>
+
+<h2>Methods</h2>
+
+<h3>Transcription factor binding analysis</h3>
+<p>Transcription factor binding ChIP-seq data used
+</p>
+<p>We collected ChIP-seq datasets available from ENCODE (ENCODE Project Consortium et al. 2012) in the GM12878 cell line. We annotated each experiment with its corresponding transcription factor using the following metadata sheet: <a target="_blank" href="https://docs.google.com/spreadsheet/ccc?key=0Am6FxqAtrFDwdHdRcHNQUy03SjBoSVMxdUNyZV9Rdnc&usp=sharing" target="_blank">https://docs.google.com/spreadsheet/ccc?key=0Am6FxqAtrFDwdHdRcHNQUy03SjBoSVMxdUNyZV9Rdnc&usp=sharing</a>.
+</p>
+<p>Then, for each TF, we created a set of merged peaks, representing the union of all peaks the given TF has across all datasets considered. We refer to these as the transcription factor binding sites, or TFBS, of the TF.
+</p>
+
+<h3>Transcription factor motif data used</h3>
+<p>For each TF, we defined a set of TF motif occurrences in the genome as follows. First, we identified for each TF one representative motif from (Kheradpour and Kellis, 2014) (Table S3). Then, for each motif in our list, we scanned all TFBS of the TFs assigned to that motif, and defined as motif matches those occurrences of the motif that received a log-odds score > 0, using a random background (25% probability of each base at each position in the motif). We refer to these as motif matches of the TF in the genome.
+</p>
+
+<h3>Overlap enrichment of TFs in histone mark peaks with a QTL</h3>
+<p>To check which TFs are enriched at the histone mark peaks for which we find a QTL, we adopted the following strategy. Given a TF of interest, we labeled each histone mark peak with 1) whether it overlapped at least one TFBS of the TF of interest, and 2) whether the peak had a QTL. We then performed a Fisher’s Exact Test, to check for enrichment of peaks with binding sites for the TF of interest in the peaks that had a QTL. We corrected the p-values of the Fisher’s Exact Test using the Benjamini Hochberg correction for multiple testing (Hochberg and Benjamini 1990) , and determined significant enrichments with a p-value threshold of < 0.05.
+</p>
+<p>We performed this analysis separately for each histone mark type, considering as peaks with QTL those peaks that had a local QTL for the given histone mark. For the set of distal QTLs, we repeated the analysis above, but considering a peak to have a QTL if the given histone mark peak had a local QTL that affected any type of distal peak. As an example, TFs that show enrichment for the distal analysis for H3K27AC are those TFs that preferentially bind H3K27AC peaks with SNPs affecting distal peaks of any molecular phenotype.
+</p>
+<p>In a similar fashion, we also checked for enrichment of specific TF motif matches in the peaks with QTLs (Fig S6A). Our analysis is analogous to the one above, this time checking for at least one overlap between a TF motif match and the histone mark peak (Fig S6B). The motif matches were defined as described in the section “Transcription factor motif data used”. Finally, we also repeated the analysis with only the motif matches that show a significant correlation of motif score with histone mark levels.
+</p>
+
+<h3>Rank-based enrichment of TFs in histone mark peaks with a QTL</h3>
+<p>We tested the rank enrichment of hQTLs in TF binding sites for all TFs in our set. For histone marks H3K27ac, H3K4me1 and H3K4me3 separately, we took each histone peak and kept the best-associated SNP with the lowest p-value (not necessarily significant), resulting in a ranked list of peaks, based on the p-value of their best-correlated SNP. We took this ranked list of peaks and segmented them with 500 peaks in the first bin and then bins for each p-value from the maximum p-value in the first bin up to the minimum p-value (e.g. 10^-10, 10^-9, …., 10^-1). For peaks within each bin p-value threshold, we calculated the fold change enrichment for overlapping with TF binding sites. To assess the significance of the enrichment we permuted the minimum p-value of  the associations corresponding to each histone peak 200 times and plotted the fold enrichment of these permuted lists in gray.
+</p>
+<p>We discovered that almost every transcription factor tested shows an enrichment for peaks in the non-significant range of 10^-1 to 10^-5. After this range, the non-LCL-related TFs tend to become depleted while LCL-specific TFs maintain or increase enrichment. We attribute this trend to our prior selection of only peaks associated with SNPs that fall within 2kb of a TSS. As a result, these peaks are biased to represent varying peaks that will inevitably show enrichment of TF binding. However, we note that only B cell-specific TFs show a maintenance or increase in enrichment after a significance level of 10^-4 or 10^-5.
+</p>
+
+<h3>Correlation of TF motif scores to the molecular phenotypes</h3>
+<p>To identify motifs that may explain the identified QTLs, we computed the correlation between motif PWM scores and histone mark peaks. This analysis was run on each histone mark, DHS and RNA separately.
+</p>
+<p>Specifically, for each peak tested in the local QTL analysis, we collected all SNPs within 2kb of the peak (these are the SNPs that were tested in the QTL analysis). For each TF, we then considered the SNPs falling inside a motif match as defined in the section “Transcription factor motif data used” as candidates to test. Then, at each tested SNP, and for each motif, we computed two scores: one corresponding to the maternal allele and one corresponding to the paternal allele. The score is computed in a window of motif length around the SNP (forcing the SNP to be part of any motif detected in this analysis). We refer to this window around the SNP as a scored region. For each motif PWM, a scored region of appropriate size was used.
+</p>
+<p>Inside each scored region, for each motif, on both alleles, we computed the maximum motif PWM logodds score (uniform background), using the Homer (<a target="_blank" href="http://homer.salk.edu/homer/ngs/index.html" target="_blank">http://homer.salk.edu/homer/ngs/index.html</a>) software suite to score the motifs (homer2 find command with -mscore option).
+</p>
+<p>Once we had allelic motif scores for each individual and each motif, we computed the Spearman correlation between the mean motif PWM score (mean between maternal and paternal allele scores) and the histone signal, as used in the QTL analysis. To assess significance of the correlations, we used the following permutation scheme. We permuted the labels of the individuals in the signal matrix and then computed correlations between the mean PWM score and the permuted signals at each histone peak. In total, we created 100 000 permutation test statistics per TF per histone mark.
+</p>
+<p>For each motif PWM, we combined all permutation-based correlations into 1 empirical distribution of correlations for that motif across all scored regions tested. Then, we used this empirical distribution to assign p-values to the absolute value of the correlations measured.
+</p>
+<p>Finally, we merged analyses across motif PWMs for each mark only for QTL peaks, and corrected the p-values for multiple hypothesis testing using the Benjamini-Hochberg correction. We determined significant motif-peak correlations as those with an adjusted p-value <=0.05. These significant motif-peak correlations will be referred to as correlated motifs. For the distal motif correlations, we included not only distally affected RNAs, but also those RNAs whose promoters overlapped histone peaks with distal hQTLs.
+</p>
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+

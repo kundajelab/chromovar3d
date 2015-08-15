@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+
+<h2>HiC analysis</h2>
+<p>
+Contact: judith.zaugg@embl.de
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/HiC" target="_blank">HiC</a> </li>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+results - HiC analysis
+results/HiC_quantification - quantification of HiC
+</pre>
+
+      </div>
+
+<h2>Methods</h2>
+
+<h3>Data processing</h3>
+
+<p>
+We processed HiC data using the HiCup pipeline (<a target="_blank" href="http://www.bioinformatics.babraham.ac.uk/projects/hicup/" target="_blank">http://www.bioinformatics.babraham.ac.uk/projects/hicup/</a>), which performs mapping of the data to an in-silico digested (HindIII) reference genome hg19, filtering for common artifacts, such as di-tag where both reads map onto the same restriction fragment as well as outputs quality measures, such as the fraction of intra-chromosomal to inter-chromosomal read pairs. Generally, the higher the fraction of intra-chromosomal read pairs, the higher the quality of the HiC data, since it is assumed that most interactions happen within one chromosome. With over 65% intrachromosomal read pairs our data is of very good quality.
+</p>
+
+<h3>Estimating physical proximity</h3>
+<p>One major challenge when analyzing HiC data is that the number of potential interactions is orders of magnitudes larger than the number of sequencing reads obtained in the experiment, even when the library is sequenced to the depth reported in this study. However, assuming that if two sites that largely interact with the same set of sites are likely to also interact with each other, we employ a co-variance measure to estimate the physical proximity between two fragments.  Such a measure is particularly useful in our study, where we integrate HiC data with genetic associations to identify long-distance genetic associations that are supported by physical interaction of the DNA. Since we can employ genetic association as an orthogonal filter to HiC interaction calls we are mainly interested in minimizing the number of false negative interactions calls and are less concerned with false positive ones.
+</p>
+<p>Our HiC-interaction analysis is based on restriction-fragment level resolution. We obtained the interaction count for each pair of fragments. To estimate the proximity between two restriction fragments A and B we calculated their co-variance as the fraction of fragments that interact with both A and B, normalized by the number of fragments interacting only with A or only with B. The distribution of the so obtained correlations is shown in Fig. S2A. As expected this measure has strong distance dependence with fragments in close genomic proximity showing very high correlation scores Fig. S2B.
+</p>
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+

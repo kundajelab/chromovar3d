@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+
+<h2>QTLs</h2>
+<p>
+Contact: judith.zaugg@embl.de
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/QTLs" target="_blank">QTLs</a> </li>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+results - QTL analysis
+
+results/correctedSignal/ - PEER corrected signal matrices for H3K4ME1, H3K4ME3, H3K27AC, dhs and RNA
+
+results/local - local QTLs
+results/distal - distal QTLs
+</pre>
+
+      </div>
+
+<h2>Methods</h2>
+
+<h3>Local QTL calling for histone marks, DHS and RNA</h3>
+
+<p>
+We employed a regression-based approach to identify the local QTLs for expression, histone modifications and DHS. For the histone and DHS data we used a window of +/- 2kb from the peak boundaries to identify SNPs associated with a peak. For the RNA we defined a window of +/-2kb of the promoter region, whereby promoter regions were defined as +/-1.5kb from the annotated TSS. To calculate the associations we used the framework implemented in the software package MatrixEQTL (Shabalin 2012). For each peak we then selected the maximum-correlated SNP and if two SNPs were in perfect LD, we selected the one that was closer to the middle of the peak. To calculate the FDR we generated 100 data sets for which we permuted the sample labels independently for each peak and ran the same analysis. The FDR was then calculated as the ratio between permuted and real associations that pass a certain p-value. Throughout the study we used a p-value threshold that corresponds to a 10% FDR. We defined a separate p-value threshold for each chromosome.
+</p>
+<p>
+The relatively small window of 2kb is motivated by the mechanism through which we expect local QTLs to act, which entails a disruption of a transcription factor binding site in close proximity to the histone modification peak. The distribution of distances between hQTLs and the middle of the peaks further justifies this choice since most QTLs tend to lie in very close proximity of the histone peak that they influence locally and even more so for DHS peaks (see Fig. S1G.)
+</p>
+
+<p>As previously described (Kasowski et al. 2013), we aligned reads to the maternal and paternal genomes separately, and then reconciled reads, to distinguish reads coming from the maternal genome, the paternal genome or ambiguous. After reconciling, we filtered out unmapped reads and duplicates (-F1548), kept only properly paired reads (-f3) with good quality (-q 30), and removed reads mapping to chrM, since for chrM we expected no histone mark signal.
+</p>
+<p>
+A conservative number of SNPs that are QTLs for more than one mark is shown in Fig. S1H. This number is conservative because it is purely based on overlapping the SNP positions (within a 10kb window) that have been called significant QTLs for the individual marks. The local QTL coordinates along with the max-correlated SNPs and p-values are provided in Table S2.
+</p>
+
+<h3>Distal QTL calling for histone marks, DHS and RNA</h3>
+<p>The challenge with trying to identify genetic associations with distal SNPs is that the number of tests that have to be performed grows exponentially with increasing distance, which decreases the power to detect associations. Thus, one strategy to maximize the number of distal associations is to reduce the search space in which to look for SNPs. To do so, we first required any SNP that would be tested for distal associations to be associated above the threshold used to call local QTLs with a local peak for any of the histone marks, DHS or RNA. The underlying assumption for this filter is that a genetic variant that affects a distal chromatin environment is likely to also affect its local environment. As a second filter we only tested associations between SNP and peak pairs that were within 2MB of each other. We report this set of QTLs in Fig. 3A (blue bars).
+</p>
+<p>To increase our power even further, we made use of the HiC data to identify distal QTLs. For this, we used a HiC correlation score of >0.4 to divide the pairs into those that are physically interacting and those that are not. For each of these sets we performed a QTL analysis as described above. Applying the concept of independent filtering (Bourgon et al. 2010), we then calculated an FDR for the interacting and non-interacting set independently. The FDR was calculated using 10 genome-wide peak-wise independent rounds of sample name (labels of the individuals from our study) permutations.
+</p>
+<p>To ensure that the increase in power is not simply due to the fact that we reduce the number of tests by looking only at the HiC-interacting fragments, we performed the same QTL analysis using permuted HiC links. As shown by the qq-Plots in Fig. S3A and Fig. S3B, for the real and the permuted links respectively, the increase in power is greater for the real HiC interactions as compared to the permuted set of interactions.
+We further assessed the effect of the window size within which to look for distal associations on i) percentage increase of distal QTLs discovered with the HiC-aware vs the non-aware method and ii) the number of distal QTLs detected at a given distance. Since association strength tends to decrease with distance, we expect an increase of the number of significant QTLs the smaller we set our window size (due to the increase in search space and therefore loss of power with increasing window size). We found that the increase of distal QTLs we find with the HiC-aware vs the normal approach increases with larger window size (Fig. S3C upper panel). However, the downside of using a small window size is that the number of very distal QTLs decreases (Fig. S3C lower panel). We decided on using a 2MB window to increase our chances of detecting very distal QTLs.
+</p>
+<p>
+To avoid any bias that would be due to distal SNPs being in LD with a local QTL we applied the following iterative procedure to every peak independently (Fig. S3D): In step one we selected the best correlated SNP (which could be a local QTL for the peak); in step two, we removed any SNP that was in LD with an R2 of more than 0.2 (based on our sample of 75 individuals); and we then went back to the next best correlated SNP and repeated step 1 and 2 until no SNP was left. We then classified QTLs as distal QTLs if they were more than 50kb apart from the peak.
+</p>
+
+<p>The distal QTL coordinates along with the max-correlated SNPs and p-values are provided in Table S2.
+</p>
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+

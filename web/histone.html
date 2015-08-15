@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+
+<h2>Histone mark quantification</h2>
+<p>
+Contact: oursu@stanford.edu
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/histone" target="_blank">Histone marks</a> </li>
+            <li>Code used for this analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/tree/master/peakCalling" target="_blank">https://github.com/kundajelab/chromovar3d/tree/master/peakCalling</a> <br>
+              A full script recapitulating the whole analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/blob/master/peakCalling/PeakCalling_fullAnalysis.sh" target="_blank">https://github.com/kundajelab/chromovar3d/blob/master/peakCalling/PeakCalling_fullAnalysis.sh</a></li>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+results - contains mapping, peaks and signal for histone mark datasets
+
+results/Alignments/reconciled/dedup/single_replicates - reconciled mapping data for single replicates
+results/Alignments/reconciled/dedup/merged_replicates - merged replicates tagAligns
+results/Alignments/reconciled/dedup/subsampled_merged_replicates - merged replicates tagAligns, but subsampled to 50M reads 
+
+results/input/ - the input file used as a control for peak calling
+
+results/peaks - the peak calling data
+results/peaks/merged_peaks - the peaks merged across individuals
+
+results/signal - signal files for the histone marks
+results/signal/bigwig - bigwig files
+results/signal/align2rawsignal - align2rawsignal .mat files (for use with extractSignal)
+
+results/data_matrix/ - unnormalized raw signal data matrices (running extracSignal on the merged peaks, using the output from align2rawsignal)
+</pre>
+
+      </div>
+
+<h2>Methods</h2>
+
+<h3>Aligning reads to personal genomes</h3>
+
+<p>
+We aligned reads to personal genomes as previously described (Kasowski et al. 2013). We specifically used SNPs from chr1-22, and chrX meaning no SNPs for chrY and chrM. We created personal genomes by adding to the reference genome all SNPs described in the Genotype Data section, to produce a diploid (maternal + paternal) genome for each individual.</p>
+<p>
+Note about chrX: Personal genomes contain the X chromosome on both paternal and maternal genome, even for males. For males, the X chromosome is kept on the paternal genome, so that the pseudo-autosomal SNPs can be inserted with both genotypes for males (in reality, one allele is on chrX, and one is on chrY). Thus, for chrX SNPs in males:
+<ul>
+  <li>if 1 genotype was given, then the SNP is not in the pseudo-autosomal region. We added the SNP to the maternal chrX.</li>
+  <li>if 2 genotypes were given, then the SNP is in the pseudo-autosomal region. We added the SNP alleles one to the maternal chrX and one to the paternal chrX.</li>
+</ul>
+</p>
+
+<p>As previously described (Kasowski et al. 2013), we aligned reads to the maternal and paternal genomes separately, and then reconciled reads, to distinguish reads coming from the maternal genome, the paternal genome or ambiguous. After reconciling, we filtered out unmapped reads and duplicates (-F1548), kept only properly paired reads (-f3) with good quality (-q 30), and removed reads mapping to chrM, since for chrM we expected no histone mark signal.
+</p>
+
+<h3>Peak calling</h3>
+<p>To ensure comparable sequence depth among all experiments analyzed, we subsampled each dataset (each combination of individual and histone mark) to 50M single end reads. which is the approximately the median number of single-end reads per dataset. To subsample, we computed the fraction of desired reads = desired reads/total reads (in all replicates pooled), and then subsampled this fraction from each replicate, getting approx. 50M for each dataset. If a dataset had fewer than 50M reads to begin with, we skipped the subsampling procedure.
+</p>
+<p>We then called peaks on each dataset using MACS2 (Zhang et al. 2008). Specifically, for each subsampled dataset, we first ran SPP (Spiro 2012) to obtain the fragment length with maximum strand cross-correlation. A summary of the number of reads and quality control NSC is contained in the output from SPP and can be found in Table S1 and Fig. S1B. We then ran MACS2 on the dataset, with parameters --nomodel, --shiftsize = ½ fragment length obtained from SPP, -p 1e-2. As control input for peak calling, we combined all 7 YRI INPUT files from (Kasowski et al. 2013) (GM18486, GM18505, GM19099, GM19193, GM19238, GM19239, GM19240) and then subsampled from this merged sample to obtain 77M reads for the input, 11M reads from each sample. This corresponds to ~1.5 the sequencing depth of the samples. We use more reads for the input sample because since it covers a larger portion of the genome, it requires more reads to achieve sequencing coverage comparable with the ChIP samples. The number of peaks detected in each individual for each mark can be found in Fig. S1C.
+</p>
+<p>For each histone mark (H3K4ME1, H3K4ME3 and H3K27AC), we merge peak regions across all 109 individuals to obtain the final list of peaks analyzed in this study. We remove peaks overlapping blacklisted regions of the genome (https://sites.google.com/site/anshulkundaje/projects/blacklists)
+</p>
+<p>The coordinates for the histone mark and DHS peaks as well as for the genes used in this study are provided in Table S2.
+</p>
+
+<h3>Signal generation</h3>
+<p>To generate the signal used for QTL analysis, we use the following strategy. First, for each dataset, we use align2rawsignal (https://code.google.com/p/align2rawsignal/) to get a genome-wide normalized signal (parameters: kernel (k)=epanechnikov, fragment length (l)=fragment length from SPP, smoothing window (w)=150, normFlag(n)=5, mapFilter (f)=0). Then, for each histone mark individually, we compute the mean signal in its respective peaks (using extractSignal https://code.google.com/p/extractsignal/).
+</p>
+<p>Signal transformation and filtering
+We then asinh transformed the peak signal and filtered removed peaks with low variability. Variability was calculated on the asinh transformed peak signals using the median absolute deviation (mad) measure. We decided on the variability threshold by mirroring the distribution of mad values that are higher than the mode on the mode of the distribution. The threshold was set to include 99.9 percent of the mirrored values (Fig. S1D). This set of peaks was used in all the remaining analyses.
+</p>
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+

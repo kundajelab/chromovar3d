@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-Frame-Options" content="allow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="http://epigenomegateway.wustl.edu/browser/style.css" />
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/base.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/personality.js"></script>
+    <script type="text/javascript" src="http://epigenomegateway.wustl.edu/browser/js/embed.js"></script>
+
+    <link rel="icon" href="../../favicon.ico">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    
+    <link href="./css/jquery.dataTables.css" rel="stylesheet">
+
+<!--    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>-->
+    <script type="text/javascript" src="./js/jquery.tablehover.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.dataTables.rowGrouping.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.ui.selectableTable.js"></script>
+
+    <link href="theme.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript" src="./data.js"></script>
+    <script type="text/javascript" src="./func.js"></script>
+
+    <script type="text/javascript">
+	$(function(){
+		$("#header").load("header.html");
+		$("#footer").load("footer.html");
+	});
+
+	$(document).ready(function( $ ) { 
+		//alert('document is ready');
+		$("div_vis_area").hide();
+	});
+	
+
+    </script>
+
+    <title>Chromovar3d</title>
+  </head>
+
+
+  <body role="document">
+    <div id="header"></div>
+
+    <div class="container-fluid theme-showcase" role="main" id="body">
+
+
+<h2>RNAseq analysis</h2>
+<p>
+Contact: oursu@stanford.edu
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/RNASeq" target="_blank">RNASeq</a> </li>
+            <li>Code used for this analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/tree/master/RNAseq" target="_blank">https://github.com/kundajelab/chromovar3d/tree/master/peakCalling</a> <br>
+              A full script recapitulating the whole analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/blob/master/RNAseq/RNA_mapping.sh" target="_blank">https://github.com/kundajelab/chromovar3d/blob/master/RNAseq/RNA_mapping.sh</a></li>
+           </ul>
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+data - sample metadata and gene models used
+
+data/GENCODE_v19_2014-06-03 - gene models used
+data/SNPdata - SNPs for masking the transcriptome for mapping
+data/Transcriptome - transcriptome used and index for Sailfish
+
+results - mapping of RNA data to the masked transcriptome. 
+
+results/GEUVADIS - output quantification from Sailfish for GEUVADIS data (YRI only)
+results/SAILFISH - the full Sailfish output for the RNA quantification
+results/GEUVADIS_data_matrix - Sailfish quantification summarized as a data matrix of TPM for gene x individual. This is reported at both transcript and gene levels. We used the gene level estimates in our analyses.
+</pre>
+
+      </div>
+
+<h2>Methods</h2>
+
+<p>
+We used the GEUVADIS data from E-GEUV-1 (Lappalainen et al. 2013), which correspond to the RNA samples passing quality thresholds. The dataset includes 54 individuals from our study.
+</p>
+
+<p>We collected all SNPs used in this study (all SNPs for which we had genotypes across at least one individual), and converted their genomic positions to Ns. This resulted in 2 transcriptomes, 1 female and 1 male (=female plus the Y chromosome), using the GENCODE v19 annotations (http://www.gencodegenes.org/releases/19.html). We defined the transcriptome as the spliced exons provided in the GENCODE annotation (restricting to only protein-coding and lincRNA genes), then ran the Sailfish-provided FilterByName.py script to remove duplicate transcripts) resulting in 94684 items for the female transcriptome and 94919 for the male transcriptome, with 20 290 genes for female and 20 336 for male.
+</p>
+
+<p>We quantified transcript expression using Sailfish (Patro et al. 2014) version 0.6.3 (which can handle Ns in the transcriptome), and specifically the TPM values. To produce gene-level estimates of expression, we sum the values for all transcripts belonging to the same gene using the Sailfish-provided script TranscriptsToGenes.sh (Patro et al. 2014). For downstream analysis, we use the quant.sf file, not the bias-corrected version. We only consider genes/transcripts quantified across all individuals, e.g. we do not consider the genes on chrY because they are only measured in males.
+</p>
+<p>To generate the signal used for QTL analysis, we start with TPM values provided by Sailfish. We then applied the same transformation and normalization procedure as described for the histone marks. In the case of RNA, however, we settled on removing 10 PEER factors since the increase in power was still clearly visible for removing up to 10 PEER factors.
+</p>
+
+
+	</div>
+    </div>
+    <div id="footer"></div>
+  </body>
+</html>
+
+
