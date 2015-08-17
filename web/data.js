@@ -61,7 +61,7 @@ var data_assay= // assays
     "signal":"H",
     "peak":"N",
     "desc":"DNase",
-    "rgb":"0,0,128"
+    "rgb":"0,0,0"
   },
   {
     "name":"H2A.Z",
@@ -204,7 +204,7 @@ var data_assay= // assays
     "signal":"H",
     "peak":"G",
     "desc":"H3K27ac",
-    "rgb":"205,92,92"
+    "rgb":"255,165,0"
   },
   {
     "name":"H3K36me3",
@@ -237,7 +237,7 @@ var data_assay= // assays
     "signal":"H",
     "peak":"G",
     "desc":"H3K4me1",
-    "rgb":"255,140,0"
+    "rgb":"255,215,0"
   },
   {
     "name":"H3K4me2",
@@ -259,7 +259,7 @@ var data_assay= // assays
     "signal":"H",
     "peak":"G",
     "desc":"H3K4me3",
-    "rgb":"255,165,0"
+    "rgb":"255,0,0"
   },
   {
     "name":"H3K56ac",
@@ -746,7 +746,7 @@ var data_bigwig =
 var data_interaction_local =
 {
 "url_head":"http://chromovar3d.stanford.edu/browserTracks/QTL/",
-"type":"interaction",
+"type":"interaction_full",
 "info":"",
 "thtype":0,"thmin":0,"thmax":500,
 "color":"Maroon","rgb":"128,0,0",
@@ -762,7 +762,7 @@ var data_interaction_local =
 var data_interaction_distal =
 {
 "url_head":"http://chromovar3d.stanford.edu/browserTracks/QTL/",
-"type":"interaction",
+"type":"interaction_full",
 "info":"",
 "thtype":0,"thmin":0,"thmax":500,
 "color":"Maroon","rgb":"128,0,0",
@@ -778,7 +778,7 @@ var data_interaction_distal =
 var data_interaction_hic =
 {
 "url_head":"http://chromovar3d.stanford.edu/browserTracks/HiC/",
-"type":"interaction",
+"type":"interaction_heatmap",
 "info":"HiC",
 "thtype":0,"thmin":0,"thmax":500,
 "color":"Maroon","rgb":"128,0,0",
@@ -791,7 +791,7 @@ var data_interaction_hic =
 var data_interaction_chiapet =
 {
 "url_head":"http://chromovar3d.stanford.edu/browserTracks/ChIAPET/",
-"type":"interaction",
+"type":"interaction_full",
 "info":"ChIA-PET",
 "thtype":0,"thmin":0,"thmax":500,
 "color":"Maroon","rgb":"128,0,0",

@@ -428,6 +428,22 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 							"fontsize":"10pt","fontfamily":"sans-serif","fontbold":false, } };
 					break;
 
+				case "interaction_heatmap":
+					var height_row_interact = height_row_interact_default;
+
+					obj= { "type": "interaction", "name": "", "url": "", "mode": 5,
+						"qtc": { "anglescale":1,
+							"fontsize":"10pt","fontfamily":"sans-serif","fontbold":false, } };
+					break;
+
+				case "interaction_full":
+					var height_row_interact = height_row_interact_default;
+
+					obj= { "type": "interaction", "name": "", "url": "", "mode": 3,
+						"qtc": { "anglescale":1,
+							"fontsize":"10pt","fontfamily":"sans-serif","fontbold":false, } };
+					break;
+
 				case "hammock": 
 					var height_row_hammock = height_row_hammock_default
 
@@ -482,7 +498,7 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 			        obj[ "assay_order" ] = 0;
 
 			// for sorting RNA seq data (positive and then negative)
-			if ( data[k].type == "interaction" ) {
+			if ( data[k].type.startsWith( "interaction" ) ) {
 				obj[ "etc_order" ] = 10000;
 			}
 			else if ( data_elem[ "info" ] != null ) {
@@ -526,8 +542,8 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 			else if ( data[k].type == "categoryMatrix" ) { 
 				obj.name = data_elem.name;
 			}
-			else if ( data[k].type == "interaction" ) { 
-				if ( data[k].info == "HiC" || data[k].info == "ChIA-PET" )
+			else if ( data[k].type.startsWith( "interaction" ) &&   
+				( data[k].info == "HiC" || data[k].info == "ChIA-PET" ) ) {
 					obj.name = data[k].info + " ";
 			}
 			else {
@@ -535,8 +551,10 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 					var filt_elem = filter[j];
 					if ( filt_elem.ignore_uc && data[k].uc )
 						break;
+//console.log(data[k].type + " " +filt_elem.assay + " " + data_elem.assay);
 
-					if ( data[k].type == "interaction" ) {
+					if ( data[k].type.startsWith( "interaction" ) ) {
+
 						if ( !filt_elem.eid && filt_elem.assay == data_elem.assay ||
 							!filt_elem.eid && !filt_elem.assay ) {
 							

@@ -65,9 +65,10 @@
 
     <div class="container-fluid theme-showcase" role="main" id="body">
 
-
-<h2>GWAS analysis</h2>
+<a name="enrichment"></a>
+<h2>GWAS enrichments</h2>
 <p>
+Contact: pgreens@stanford.edu
 </p>
 
       <div class="page-header">
@@ -76,24 +77,48 @@
            <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
 
            <ul>
-            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas" target="_blank">GWAS analysis</a> </li>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas/enrichment" target="_blank">GWAS enrichments</a> </li>
+           </ul>
+      </div>
+
+<a name="net"></a>
+<h2>GWAS networks</h2>
+<p>
+Contact: oursu@stanford.edu
+</p>
+
+      <div class="page-header">
+
+           <div class="well">
+           <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
+
+           <ul>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas/networks" target="_blank">GWAS networks</a> </li>
+            <li>Code used for this analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/tree/master/GWASnetworks" target="_blank">https://github.com/kundajelab/chromovar3d/tree/master/GWASnetworks</a> <br>
+              A full script recapitulating the whole analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/blob/master/GWASnetworks/GWAS_networks_2015-06-13.sh" target="_blank">https://github.com/kundajelab/chromovar3d/blob/master/GWASnetworks/GWAS_networks_2015-06-13.sh</a></li>            
            </ul>
 <br>
 <p><strong>Contents</strong></p>
 <pre>
-blank
+results/2015-06-13 - analysis files
+
+results/2015-06-13/Annotations - annotations for regulatory elements used in creating the networks
+results/2015-06-13/GWAS_hits_Peyton - the GWAS hit -related bed files
+results/2015-06-13/gwasOverlaps - overlaps with GWAS and networks
+results/2015-06-13/QTLs - QTLs expanded in LD
+
+The GWAS networks are in files with the following paths:
+results/2015-06-13/gwasOverlaps/overlapQTL_${disease}_pruned_rsq_0.8_expanded_rsq_0.8/overlapQTL_${disease}_pruned_rsq_0.8_expanded_rsq_0.8.bed.LD08_p5.bed.overlapGWAS.LD0.8.p0.00001.txt.net.pval0.00001.uniq
 </pre>
 
       </div>
 
 <h2>Methods</h2>
 
-<h3>N/A</h3>
-
+<h3>Construction of regulatory networks for diseases with GWAS using hQTLs, dsQTLs and eQTLs from our study</h3>
 <p>
-N/A
-</p>
-
+To intersect our hQTLs and eQTLs with GWAS hits, we adopted the following strategy. For each GWAS, we collected a set of tag SNPs, which we expanded using European LD. We then asked which of our local and distal QTLs (expanded with Yoruban LD, R2>=0.8, with the expansion done based on both genomic position and rsID) overlap the set of expanded GWAS tag SNPs. With these overlaps, we created a network connecting together GWAS tag SNPs, regulatory elements connected to these tag SNPs and target genes. Specifically, a link from a SNP to a regulatory element or target gene means that the tag SNP (expanded in European LD) is in LD (R2>=0.8) with a QTL-SNP affecting that regulatory element/gene through a local QTL. If the local QTL also has a distal effect on another regulatory element/gene, then we add an edge connecting them in the network. Edges going into gene nodes represent QTLs that affect either the expression of the gene (eQTLs), or the levels of a histone mark of dhs in a region overlapping the transcription start site base of the gene. Regulatory elements in these networks are a set of genomic regions obtained by merging together the histone peaks for the three marks H3K4me1, H3K27ac and H3K4me3 and dhs peaks.
+</p>      
 
 	</div>
     </div>
