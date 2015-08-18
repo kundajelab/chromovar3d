@@ -1,7 +1,7 @@
 // to change track name width -> in ../browser/sukn.js, browser.leftColumnWidth=210;
 var _DEBUG_ = false;
 
-var tmp_json_url 	= "http://mitra.stanford.edu/kundaje/chromovar3d_cache/";
+var tmp_json_url 	= "http://mitra.stanford.edu/kundaje/portal/chromovar3d_cache/";
 
 var host_url 		= "http://epigenomegateway.wustl.edu";
 var wubrowser_url 	= "http://epigenomegateway.wustl.edu/browser/"
@@ -202,7 +202,7 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 		voc.vocabulary.Assay.Assays.push( order_str );
 	}
 	
-	json.push( facet );
+	//json.push( facet );
 
 	// temp array for faster search
 	for(var k = 0; k < data_epg.length; k++ ) {
@@ -630,8 +630,7 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 			}
 
 			if ( obj.name != "" ) { // filter out if no obj name
-
-
+				
 				// add metadata
 				var metadata = new Object;
 
@@ -643,7 +642,7 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 					metadata[ "Assay" ]=  ( assay_json[ data_elem.assay ].order + 10000).toString(); 
 					// +10000 to make ID unique
 				}		
-
+				
 				if ( data_elem.info ) {
 					//if ( !data_elem.info.startsWith("GM") )
 					obj.name = obj.name + "("+data_elem.info+") ";
@@ -659,7 +658,7 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 				// replacece '_' with ' '
 				obj.name = obj.name.replace(/_/g," ");
 
-				obj[ "metadata" ] = metadata;
+				//obj[ "metadata" ] = metadata;
 				obj.url  = data[k].url_head + data_elem.url_tail;
 
 				json_current.push(obj);
@@ -708,6 +707,10 @@ function populate_dropdown_by_assay( elem_id, data ) {
 
 	var select_assay = document.getElementById( elem_id );
 	var data_cnt = new Object;
+
+	for(var i=select_assay.options.length-1;i>=1;i--) {
+		select_assay.remove(i);
+	}	
 
 	// loop through data, add assay to list
 	for(var k = 0; k < data.length; k++ ) {
@@ -768,8 +771,11 @@ function init_ddl_bigwig()
         	data.push( data_interaction_hic );
         if ( document.getElementById("chkbox_show_interaction_chiapet").checked )
         	data.push( data_interaction_chiapet );
+
 	data.push( data_bed );
-	data.push( data_bigwig );
+
+        if ( document.getElementById("chkbox_show_signal_tracks").checked )
+		data.push( data_bigwig );
 
 	populate_dropdown_by_assay("ddl_assay_bigwig", data ); // data_bed, 
 }
@@ -786,8 +792,11 @@ function onchange_ddl_assay_bigwig(dropdown)
         	data.push( data_interaction_hic );
         if ( document.getElementById("chkbox_show_interaction_chiapet").checked )
         	data.push( data_interaction_chiapet );
+
 	data.push( data_bed );
-	data.push( data_bigwig );
+
+        if ( document.getElementById("chkbox_show_signal_tracks").checked )
+		data.push( data_bigwig );
 
 	return onchange_dropdown_by_assay(dropdown, data, "", "chkbox_new_page_bigwig", "embed_bigwig" );
 }
@@ -808,8 +817,11 @@ function onclick_btn_bigwig( btn )
         	data.push( data_interaction_hic );
         if ( document.getElementById("chkbox_show_interaction_chiapet").checked )
         	data.push( data_interaction_chiapet );
+
 	data.push( data_bed );
-	data.push( data_bigwig );
+
+        if ( document.getElementById("chkbox_show_signal_tracks").checked )
+		data.push( data_bigwig );
 
         var embed_id = document.getElementById("chkbox_new_page_bigwig").checked ? null : "embed_bigwig"; // embed or null
         visualize_data( data, [{"":""}], embed_id, true );

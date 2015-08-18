@@ -77,9 +77,29 @@ Contact: pgreens@stanford.edu
            <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
 
            <ul>
-            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas/enrichment" target="_blank">GWAS enrichments</a> </li>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas/enrichment" target="_blank">http://chromovar3d.stanford.edu/gwas/enrichment</a> </li>
            </ul>
       </div>
+
+<h2>Methods</h2>
+
+<h3>hQTL enrichment in known disease variants</h3>
+<p>
+To assess whether hQTLs were significantly enriched in GWAS SNPs we used GRASP and Roadmap GWAS SNPs with p < 1e-5 and matched these SNPs across the genome by MAF (0 to 0.5 in 0.05 intervals), distance to transcription start site (TSS) according to GENCODE v19 (Harrow et al., 2012) gene annotations (distribution chosen by log distribution of distance from all SNPs to TSS and binned into 10 breaks), and LD (distribution chosen by log distribution of number of SNPs tagged by each variant within 1 Mb with R2 ≥ 0.8) computed by genotype. GWAS SNPs were thinned to contain only a single variant, favoring the most significant p-value where there were multiple linked variants for the same trait. These were then expanded to all linked variants with European R2 ≥ 0.8. MAF and LD matched using phase I 1000 Genome Europeans, and hQTL linkage to GWAS and linked SNPs was determined using YRI LD metrics with R2 ≥ 0.8. We calculated empirical p-values with 1,000 sets of matched SNPs.
+</p>
+
+<p>
+To test whether hQTLs for H3K4me1, H3K4me3, and H3K27ac were enriched for linkage with GWAS variants for specific diseases (Fig. 7B), we used all GWAS data sets in the Roadmap GWAS database (n=67) (Table S4) and the GRASP database (n=178) (Leslie et al., 2014) that had more than 500 listed variants after lead SNPs in LD were removed, keeping only the most significantly associated variant. We also included two larger GWAS studies for Type 1 diabetes (Barrett et al., 2009) and Alzheimer’s disease (Lambert et al., 2013). The GWAS SNPs were pruned to contain no variants in linkage disequilibrium by keeping the most significant p-value where there were multiple linked variants for the same trait. These were then expanded to all linked variants with European R2 ≥ 0.8. We first tested the enrichment of GWAS SNPs with p < 1e-5 compared to those with p > 1e-5 for each study. We then matched the GWAS SNPs with p < 1e-5 across the genome by MAF, TSS and LD as before. To calculate the enrichment of GWAS SNPs for hQTLs, we used a one-sided Fisher test with GWAS SNPs below 1e-5 and with 50 pooled sets of matched SNPs. We performed a Benjamini Hochberg correction for multiple hypothesis testing. We set all p-values below 1e-16 to 1e-16 and plotted, for all studies with at least 400 SNPs with p < 1e-5, the negative log base 10 adjusted p-values by the log 2 odds ratio. We highlighted all GWAS that had an adjusted p-value < 0.01. If there were multiple studies for the same disease, we displayed the most significant study.
+</p>
+
+<p>
+We then performed a rank-based enrichment of hQTLs to gain a fine-grained view of the significance level at which GWAS variants become enriched for hQTLs (Fig. 7CD, Fig S7B). We segmented each GWAS study into bins representing different tiers of significance. We set a minimum bin size of 50 and filled the first bin with the 50 most significantly associated variants for each study. We then filled the next bins with 2*50, 4*50 and 8*50 variants and then segmented the remaining variants into bins at the four quartiles of the remaining p-value distribution. We then computed the rank fold change enrichment of hQTLs across the segmented GWAS (Maurano et al., 2012). For each bin we computed the fraction of GWAS variants less than or equal to the bin’s p-value threshold that overlapped hQTLs. We calculated the fold change by dividing this fraction by the fraction of all GWAS variants of any significance level overlapping hQTLs. The red line shows the fold change enrichment at each p-value bin. To gauge the significance of the enrichment, we permuted the p-values among the GWAS hits and re-computed the fold change enrichment at each p-value bin. We permuted the p-values 200 times and the set of gray lines show the range of enrichments found for permuted GWAS enrichment in hQTLs.
+</p>
+
+
+
+
+
 
 <a name="net"></a>
 <h2>GWAS networks</h2>
@@ -93,7 +113,7 @@ Contact: oursu@stanford.edu
            <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
 
            <ul>
-            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas/networks" target="_blank">GWAS networks</a> </li>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas/networks" target="_blank">http://chromovar3d.stanford.edu/gwas/networks</a> </li>
             <li>Code used for this analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/tree/master/GWASnetworks" target="_blank">https://github.com/kundajelab/chromovar3d/tree/master/GWASnetworks</a> <br>
               A full script recapitulating the whole analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/blob/master/GWASnetworks/GWAS_networks_2015-06-13.sh" target="_blank">https://github.com/kundajelab/chromovar3d/blob/master/GWASnetworks/GWAS_networks_2015-06-13.sh</a></li>            
            </ul>

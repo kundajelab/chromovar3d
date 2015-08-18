@@ -67,6 +67,38 @@
 
       <div class="page-header">
 
+<h2>Abstract</h2>
+
+<table><tbody>
+<td>
+<p>
+Deciphering the impact of genetic variants on gene regulation is fundamental to understanding human disease. Although gene regulation often involves long-range interactions, it is unknown to what extent non-coding genetic variants influence distal molecular phenotypes. Here, we integrate chromatin profiling for three histone marks in lymphoblastoid cell lines (LCLs) from 75 sequenced individuals with LCL-specific Hi-C and ChIA-PET-based chromatin contact maps to uncover one of the largest collections of local and distal histone quantitative trait loci (hQTLs). Distal QTLs are enriched within topologically associated domains and exhibit largely concordant variation of chromatin state coordinated by proximal and distal non-coding genetic variants. Histone QTLs are enriched for common variants associated with autoimmune diseases and enable identification of putative target genes of disease-associated variants from genome-wide association studies. These analyses provide insights into how genetic variation can affect human disease phenotypes by coordinated changes in chromatin at interacting regulatory elements.         
+</p>
+</td>
+<td><img src="./images/webserverpicture.png" width=300></img></td>
+</tbody></table>
+
+<h3>AUTHORS</h3>
+<p>
+Fabian Grubert <sup>1,7</sup>, Judith B. Zaugg<sup>1,2,7</sup>, Maya Kasowski<sup>1,7</sup>, Oana Ursu<sup>1,7</sup>, Damek V. Spacek<sup>1</sup>, Alicia R. Martin<sup>1</sup>, Peyton Greenside<sup>3</sup>, Rohith Srivas<sup>1</sup>, Doug H. Phanstiel<sup>1</sup>, Aleksandra Pekowska<sup>2</sup>, Nastaran Heidari<sup>1</sup>, Ghia Euskirchen<sup>1</sup>, Wolfgang Huber<sup>2</sup>, Jonathan K. Pritchard<sup>1,4,5</sup>, Carlos D. Bustamante<sup>1</sup>, Lars M. Steinmetz<sup>1,2</sup>, Anshul Kundaje<sup>1,6</sup>, and Michael Snyder<sup>1,*</sup>
+</p>
+
+<h3>AFFILIATIONS</h3>
+<ul style="list-style-type: none">
+<li>1) Department of Genetics, Stanford University School of Medicine, Stanford, CA 94305, USA</li>
+<li>2) The European Molecular Biology Laboratory Heidelberg, 69117 Heidelberg, Germany</li>
+<li>3) Biomedical Informatics Graduate Training Program, Stanford University School of Medicine, Stanford, CA 94305, USA</li>
+<li>4) Department of Biology, Stanford University, Stanford, CA 94305, USA</li>
+<li>5) Howard Hughes Medical Institute, Stanford University, Stanford, CA 94305, USA</li>
+<li>6) Department of Computer Science, Stanford University, Stanford, CA 94305, USA</li>
+<li>7) Co-first author</li>
+<li>*) Correspondence: mpsnyder@stanford.edu</li>
+</ul>
+<p>
+</p>
+
+
+
         <h2>Visualization</h2>
 
             <div class="well">
@@ -75,48 +107,27 @@
                <ul>
                 <li>Code used for this analysis is at: <a href="https://github.com/kundajelab/chromovar3d" target="_blank">https://github.com/kundajelab/chromovar3d</a></li>
                </ul>
-<br>
+                <br>
                 <select class="ddl_assay" id="ddl_assay_bigwig" onchange="onchange_ddl_assay_bigwig(this);">
-                    <option>Choose a histone</option>
+                    <option>Choose a chromatin mark</option>
                 </select> &nbsp &nbsp
-                <button id="btn_bigwig" onclick="onclick_btn_bigwig(this);"> Visualize all histones and DNase </button>                
-                <br> <input type="checkbox" id="chkbox_show_interaction_local"> Show local QTLs</input>
-                <br> <input type="checkbox" id="chkbox_show_interaction_distal"> Show distal QTLs</input>
-                <br> <input type="checkbox" id="chkbox_show_interaction_hic"> Show HiC (takes several minutes to visualize according to your computer resources)</input>
-                <br> <input type="checkbox" id="chkbox_show_interaction_chiapet"> Show ChiA-PET</input>
-                <br> <input type="checkbox" id="chkbox_new_page_bigwig"> Open in a new page (deactivate pop-up blockers)</input>
+                <button id="btn_bigwig" onclick="onclick_btn_bigwig(this);" onclick="init_ddl_bigwig()"> Visualize all histones and DNase </button>                
+                <br> <input type="checkbox" id="chkbox_show_interaction_local" onclick="init_ddl_bigwig()" checked> Show local QTLs</input>
+                <br> <input type="checkbox" id="chkbox_show_interaction_distal" onclick="init_ddl_bigwig()" checked> Show distal QTLs</input>
+                <br> <input type="checkbox" id="chkbox_show_signal_tracks" onclick="init_ddl_bigwig()"> Show signal tracks</input>
+                <br> <input type="checkbox" id="chkbox_show_interaction_hic" onclick="init_ddl_bigwig()"> Show HiC (takes several minutes to visualize according to your computer resources)</input>
+                <br> <input type="checkbox" id="chkbox_show_interaction_chiapet" onclick="init_ddl_bigwig()"> Show ChiA-PET</input>
+                <br> <input type="checkbox" id="chkbox_new_page_bigwig" onclick="init_ddl_bigwig()" checked> Open in a new page (deactivate pop-up blockers)</input>
+                <br><br>
+                <p><b>Legend for QTL tracks</b>: The QTL tracks contain all associations passing the p-value threshold corresponding to a 10% FDR. Each association is represented in the "interaction" format, that is, as a link between the QTL SNP (1 base) and the peak. The scores (colors of the links) represent the association effect sizes.</p>
                 <br><div style='margin:20px;border:solid 2px green;display:none;' id='embed_bigwig'></div>
             </div>
+            
 
-<p>
-Deciphering the impact of genetic variants on gene regulation is fundamental to understanding human disease. Although gene regulation often involves long-range interactions, it is unknown to what extent non-coding genetic variants influence distal molecular phenotypes. Here, we integrate chromatin profiling for three histone marks in lymphoblastoid cell lines (LCLs) from 75 sequenced individuals with LCL-specific Hi-C and ChIA-PET-based chromatin contact maps to uncover one of the largest collections of local and distal histone quantitative trait loci (hQTLs). Distal QTLs are enriched within topologically associated domains and exhibit largely concordant variation of chromatin state coordinated by proximal and distal non-coding genetic variants. Histone QTLs are enriched for common variants associated with autoimmune diseases and enable identification of putative target genes of disease-associated variants from genome-wide association studies. These analyses provide insights into how genetic variation can affect human disease phenotypes by coordinated changes in chromatin at interacting regulatory elements.         
-</p>
-<!--
-<p>
-Code used for this analysis is at: <a href="https://github.com/kundajelab/chromovar3d" target="_blank">https://github.com/kundajelab/chromovar3d</a>
-</p>
--->
         <script>
             init_ddl_bigwig();
         </script>
-<!--
-        <h2>Contents</h2>
-        <dl>
-        <dt><a href="http://chromovar3d.stanford.edu/ChIA-PET" target="_blank">ChIA-PET</a></dt><dd> - ChIA-PET analysis </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/DNase" target="_blank">DNase</a></dt><dd> - DNase processing, peak calling, and data matrix </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/genomes" target="_blank">genomes</a></dt><dd> - personal genomes used in this project</dd>
-        <dt><a href="http://chromovar3d.stanford.edu/gwas" target="_blank">gwas</a></dt><dd> - GWAS related analyses </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/HiC" target="_blank">HiC</a></dt><dd> - HiC quantification </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/histone" target="_blank">histone</a></dt><dd>  - H3K4ME1, H3K4ME3, H3K27AC data processing, peak calling and data matrix</dd>
 
-
-        <dt><a href="http://chromovar3d.stanford.edu/metadata" target="_blank">metadata</a></dt><dd> - metadata for the samples in this study </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/motifs" target="_blank">motifs</a></dt><dd> - Motif analysis </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/QTLs" target="_blank">QTLs</a></dt><dd> - QTL calls and normalized PEER-corrected signal matrices for H3K4ME1, H3K4ME3, H3K27AC, dhs and RNA </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/RNASeq" target="_blank">RNASeq</a></dt><dd> - RNAseq data processing </dd>
-        <dt><a href="http://chromovar3d.stanford.edu/TFBS" target="_blank">TFBS</a></dt><dd> - TF binding rank enrichments</dd>
-        </dl>				  
--->
 	</div>
     </div>
     <div id="footer"></div>

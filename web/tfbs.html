@@ -78,7 +78,7 @@ Contact: oursu@stanford.edu
            <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
 
            <ul>
-            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/motifs" target="_blank">Motif analysis</a> </li>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/motifs" target="_blank">http://chromovar3d.stanford.edu/motifs</a> </li>
            </ul>
 <br>
 <p><strong>Contents</strong></p>
@@ -157,10 +157,22 @@ Contact: pgreens@stanford.edu
            <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
 
            <ul>
-            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/TFBS/TFBS_rank_enrichments" target="_blank">TF binding</a> </li>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/TFBS/TFBS_rank_enrichments" target="_blank">http://chromovar3d.stanford.edu/TFBS/TFBS_rank_enrichments</a> </li>
           </ul>
       </div>
-      
+
+<h2>Methods</h2>
+
+<h3>Rank-based enrichment of TFs in histone mark peaks with a QTL</h3>
+<p>
+We tested the rank enrichment of hQTLs in TF binding sites for all TFs in our set. For histone marks H3K27ac, H3K4me1 and H3K4me3 separately, we took each histone peak and kept the best-associated SNP with the lowest p-value (not necessarily significant), resulting in a ranked list of peaks, based on the p-value of their best-correlated SNP. We took this ranked list of peaks and segmented   them with 500 peaks in the first bin and then bins for each p-value from the maximum p-value in the first bin up to the minimum p-value (e.g. 10<sup>-10</sup>, 10<sup>-9</sup>, ...., 10<sup>-1</sup>). For peaks within each bin p-value threshold, we calculated the fold change enrichment for overlapping with TF binding sites. To assess the significance of the enrichment we permuted the minimum p-value of the associations corresponding to each histone peak 200 times and plotted the fold enrichment of these permuted lists in gray. 
+</p>
+
+<p>
+We discovered that almost every transcription factor tested shows an enrichment for peaks in the non-significant range of 10<sup>-1</sup> to 10<sup>-5</sup>. After this range, the non- LCL-related TFs tend to become depleted while LCL-specific TFs maintain or increase enrichment. We attribute this trend to our prior selection of only peaks associated with SNPs that fall within 2kb of a TSS. As a result, these peaks are biased to represent varying peaks that will inevitably show enrichment of TF binding. However, we note that only B cell-specific TFs show a maintenance or increase in enrichment after a significance level of 10<sup>-4</sup> or 10<sup>-5</sup>.
+</p>
+
+
 	</div>
     </div>
     <div id="footer"></div>

@@ -1,0 +1,6 @@
+#$ sudo su
+#$ crontab -e
+
+# remove all cache at 3:30am every Sunday 
+#30 3 * * 0 rm -f /srv/www/kundaje/portal/chromovar3d_cache/*.json
+

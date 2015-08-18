@@ -3,9 +3,8 @@
 #include <string.h>
 #include <errno.h>
 
-//#define WWWT "/srv/epgg2/roadmap/web_portal/temp"
-//#define WWWT "/home/akundaje/web_portal_cache"
-#define WWWT "/srv/www/kundaje/chromovar3d_cache/"
+//#define WWWT "/srv/www/kundaje/chromovar3d_cache/"
+#define WWWT "/srv/www/kundaje/portal/chromovar3d_cache/"
 
 int main()
 {

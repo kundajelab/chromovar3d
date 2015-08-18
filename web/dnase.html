@@ -77,7 +77,7 @@ Contact: oursu@stanford.edu
            <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
 
            <ul>
-            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/DNase" target="_blank">DNase</a> </li>
+            <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/DNase" target="_blank">http://chromovar3d.stanford.edu/DNase</a> </li>
             <li>Code used for this analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/tree/master/DNase" target="_blank">https://github.com/kundajelab/chromovar3d/tree/master/DNase</a> <br>
               A full script recapitulating the whole analysis is at: <a target="_blank" href="https://github.com/kundajelab/chromovar3d/blob/master/DNase/DNase_analysis.sh" target="_blank">https://github.com/kundajelab/chromovar3d/blob/master/DNase/DNase_analysis.sh</a></li>
            </ul>
@@ -110,7 +110,7 @@ raw data matrix of mean signal per peak in each individual: data/hg19/subsampled
 <h2>Methods</h2>
 
 <p>
-We downloaded DNaseI data for 70 individuals from the (http://www.ncbi.nlm.nih.gov/pubmed/22307276), as aligned reads (hg18 assembly) from: http://eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/. We converted read coordinates to hg19 using LiftOver (https://genome.ucsc.edu/cgi-bin/hgLiftOver). For further analysis, we only considered the reads mapping to chromosomes 1-22, X and Y, since for chrM we expected no histone mark signal.
+We downloaded DNaseI data for 70 individuals from the (<a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/22307276">http://www.ncbi.nlm.nih.gov/pubmed/22307276</a>), as aligned reads (hg18 assembly) from: <a target="_blank" href="http://eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/">http://eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/</a>. We converted read coordinates to hg19 using LiftOver (<a target="_blank" href="https://genome.ucsc.edu/cgi-bin/hgLiftOver">https://genome.ucsc.edu/cgi-bin/hgLiftOver</a>). For further analysis, we only considered the reads mapping to chromosomes 1-22, X and Y, since for chrM we expected no histone mark signal.
 </p>
 <p>
 To call DNase peaks, we first shifted reads by 75 base pairs (75bp to the left for reads on plus strand and 75bp to the right for reads on the minus strand), leading to expected peak sizes of 150bp, and then called peaks using MACS2 on pooled replicates (subsampled to 35M reads to ensure comparable sequencing depths across samples), with the following parameters: --nomodel option, --shiftsize=75 --pvalue 1e-2. We trimmed peaks in each individual to be 100bp long, centered on the peak summit provided by MACS (Zhang et al. 2008) (column 10), and removed peaks overlapping blacklisted regions of the genome. We merged the trimmed peaks across individuals, and filtered peaks whose minimum p-value across all individuals was higher than 1e-5. This filters out peaks that have bad quality in all individuals.
