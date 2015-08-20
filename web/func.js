@@ -384,7 +384,7 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 				case "bed":
 					var height_row_bed = height_row_bed_default;
 
-					obj= { "type": "bed", "name": "", "url": "", "mode": 2, 
+					obj= { "type": "bed", "name": "", "url": "", "mode": 1,
 						"qtc": { "height" : height_row_bed, 						
 							"fontsize":"0pt","fontfamily":"sans-serif","fontbold":false, } };
 				
@@ -395,7 +395,7 @@ function generate_json( data, filter, sort ) // data is an array of json objects
 					else if ( data_elem.url_tail.search("FractionalMethylation.bed.gz") >= 0 )
 						has_align_data = true;
 					else if ( data_elem.url_tail.search("mergedPeak") >= 0 ) {
-						obj.mode = 2;
+						obj.mode = 1;
 
 						if ( data_elem.assay )	{
 							if ( assay_json[ data_elem.assay ].rgb ) {
@@ -804,11 +804,11 @@ function onchange_ddl_assay_bigwig(dropdown)
 function onclick_btn_bigwig( btn )
 {
 	var data = new Array();
-
+/*
 	if ( document.getElementById("chkbox_show_interaction_local").checked || 
 	     document.getElementById("chkbox_show_interaction_distal").checked )
 		data.push( data_interaction_rna );
-	
+*/	
         if ( document.getElementById("chkbox_show_interaction_local").checked )
         	data.push( data_interaction_local );
         if ( document.getElementById("chkbox_show_interaction_distal").checked )

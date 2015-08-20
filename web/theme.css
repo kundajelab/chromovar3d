@@ -116,7 +116,7 @@ dl {
     outline: none; }
 
 
-h1 {
+h1 {  
   font-weight: bold;
   color: #663300;
   font-size: 1.45em; 
@@ -124,6 +124,7 @@ h1 {
   padding-bottom: 0.75em; }
 
 h2 {
+  text-shadow: 0.35px 0.35px #505050;
   font-weight: bold;
   color: #5E8771;
   font-size: 1.35em;

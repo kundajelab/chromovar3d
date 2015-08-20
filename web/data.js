@@ -756,6 +756,7 @@ var data_interaction_local =
 {"eid":"","assay":"H3K4me3","info":"Local QTLs","url_tail":"LocalQTLs.H3K4ME3.gz"},
 {"eid":"","assay":"H3K27ac","info":"Local QTLs","url_tail":"LocalQTLs.H3K27AC.gz"},
 {"eid":"","assay":"DNase","info":"Local QTLs","url_tail":"LocalQTLs.dhs.gz"},
+{"eid":"","assay":"RNAseq","info":"Local QTLs","url_tail":"LocalQTLs.RNA.gz"},
 ],
 };
 
@@ -772,6 +773,7 @@ var data_interaction_distal =
 {"eid":"","assay":"H3K4me3","info":"Distal QTLs","url_tail":"DistalQTLs.H3K4ME3.gz"},
 {"eid":"","assay":"H3K27ac","info":"Distal QTLs","url_tail":"DistalQTLs.H3K27AC.gz"},
 {"eid":"","assay":"DNase","info":"Distal QTLs","url_tail":"DistalQTLs.dhs.gz"},
+{"eid":"","assay":"RNAseq","info":"Distal QTLs","url_tail":"DistalQTLs.RNA.gz"},
 ],
 };
 
@@ -801,7 +803,7 @@ var data_interaction_chiapet =
 {"eid":"","assay":"","info":"H3K4me3","url_tail":"FG.cell_H3K4Me3_GM78_std_0.0.interactions.fdr-2.bedpe.pairwiseTrack.gz"},
 ],
 };
-
+/*
 var data_interaction_rna =
 {
 "url_head":"http://chromovar3d.stanford.edu/browserTracks/QTL/",
@@ -811,10 +813,11 @@ var data_interaction_rna =
 "color":"Maroon","rgb":"128,0,0",
 "data":
 [
-{"eid":"","assay":"RNA","info":"Local QTLs","url_tail":"LocalQTLs.RNA.gz"},
-{"eid":"","assay":"RNA","info":"Distal QTLs","url_tail":"DistalQTLs.RNA.gz"},
+{"eid":"","assay":"RNAseq","info":"Local QTLs","url_tail":"LocalQTLs.RNA.gz"},
+{"eid":"","assay":"RNAseq","info":"Distal QTLs","url_tail":"DistalQTLs.RNA.gz"},
 ],
 };
+*/
 
 var data_bed =
 {

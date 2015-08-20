@@ -65,19 +65,20 @@
 
     <div class="container-fluid theme-showcase" role="main" id="body">
 
-      <div class="page-header">
-
 <h2>Abstract</h2>
 
 <table><tbody>
-<td>
+<td valign="top">
 <p>
 Deciphering the impact of genetic variants on gene regulation is fundamental to understanding human disease. Although gene regulation often involves long-range interactions, it is unknown to what extent non-coding genetic variants influence distal molecular phenotypes. Here, we integrate chromatin profiling for three histone marks in lymphoblastoid cell lines (LCLs) from 75 sequenced individuals with LCL-specific Hi-C and ChIA-PET-based chromatin contact maps to uncover one of the largest collections of local and distal histone quantitative trait loci (hQTLs). Distal QTLs are enriched within topologically associated domains and exhibit largely concordant variation of chromatin state coordinated by proximal and distal non-coding genetic variants. Histone QTLs are enriched for common variants associated with autoimmune diseases and enable identification of putative target genes of disease-associated variants from genome-wide association studies. These analyses provide insights into how genetic variation can affect human disease phenotypes by coordinated changes in chromatin at interacting regulatory elements.         
 </p>
+
+<br><br><h2 style="margin-top:0; padding-top:0">Visualization</h2>
+
 </td>
 <td><img src="./images/webserverpicture.png" width=300></img></td>
 </tbody></table>
-
+<!--
 <h3>AUTHORS</h3>
 <p>
 Fabian Grubert <sup>1,7</sup>, Judith B. Zaugg<sup>1,2,7</sup>, Maya Kasowski<sup>1,7</sup>, Oana Ursu<sup>1,7</sup>, Damek V. Spacek<sup>1</sup>, Alicia R. Martin<sup>1</sup>, Peyton Greenside<sup>3</sup>, Rohith Srivas<sup>1</sup>, Doug H. Phanstiel<sup>1</sup>, Aleksandra Pekowska<sup>2</sup>, Nastaran Heidari<sup>1</sup>, Ghia Euskirchen<sup>1</sup>, Wolfgang Huber<sup>2</sup>, Jonathan K. Pritchard<sup>1,4,5</sup>, Carlos D. Bustamante<sup>1</sup>, Lars M. Steinmetz<sup>1,2</sup>, Anshul Kundaje<sup>1,6</sup>, and Michael Snyder<sup>1,*</sup>
@@ -94,18 +95,13 @@ Fabian Grubert <sup>1,7</sup>, Judith B. Zaugg<sup>1,2,7</sup>, Maya Kasowski<su
 <li>7) Co-first author</li>
 <li>*) Correspondence: mpsnyder@stanford.edu</li>
 </ul>
-<p>
-</p>
-
-
-
-        <h2>Visualization</h2>
+-->
 
             <div class="well">
                <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
 
                <ul>
-                <li>Code used for this analysis is at: <a href="https://github.com/kundajelab/chromovar3d" target="_blank">https://github.com/kundajelab/chromovar3d</a></li>
+                <li>Download URL for browser tracks: <a href="http://chromovar3d.stanford.edu/browserTracks/" target="_blank">http://chromovar3d.stanford.edu/browserTracks/</a></li>
                </ul>
                 <br>
                 <select class="ddl_assay" id="ddl_assay_bigwig" onchange="onchange_ddl_assay_bigwig(this);">
@@ -129,7 +125,7 @@ Fabian Grubert <sup>1,7</sup>, Judith B. Zaugg<sup>1,2,7</sup>, Maya Kasowski<su
         </script>
 
 	</div>
-    </div>
+
     <div id="footer"></div>
   </body>
 </html>
