@@ -6,7 +6,7 @@ Contact: oursu@stanford.edu
 
 **Contents**
 
-- **browserTracks** - code for creating the browser tracks displayed at http://mitra.stanford.edu/kundaje/chromovar3d
+- **browserTracks** - code for creating the browser tracks displayed at http://chromovar3d.stanford.edu
 
 - **DNase** - code for processing the DNase data
 
