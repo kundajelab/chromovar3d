@@ -85,20 +85,25 @@ Contact: oursu@stanford.edu
 <pre>
 results - contains mapping, peaks and signal for histone mark datasets
 
-results/Alignments/reconciled/dedup/single_replicates - reconciled mapping data for single replicates
-results/Alignments/reconciled/dedup/merged_replicates - merged replicates tagAligns
-results/Alignments/reconciled/dedup/subsampled_merged_replicates - merged replicates tagAligns, but subsampled to 50M reads 
+alignments
+alignments/reconciled/dedup/single_replicates - reconciled mapping data for single replicates
+alignments/reconciled/dedup/subsampled_merged_replicates - merged replicates tagAlign files, but subsampled to 50M reads
 
-results/input/ - the input file used as a control for peak calling
+Input control
+input/ - the input file used as a control for peak calling
 
-results/peaks - the peak calling data
-results/peaks/merged_peaks - the peaks merged across individuals
+Peaks
+peaks - the peak calling data
+peaks/merged_peaks - the peaks merged across individuals
 
-results/signal - signal files for the histone marks
-results/signal/bigwig - bigwig files
-results/signal/align2rawsignal - align2rawsignal .mat files (for use with extractSignal)
+Signal
+signal - signal files for the histone marks
+signal/bigwig - bigwig files
+signal/align2rawsignal - align2rawsignal .mat files (for use with extractSignal)
 
-results/data_matrix/ - unnormalized raw signal data matrices (running extracSignal on the merged peaks, using the output from align2rawsignal)
+Data matrix
+data_matrix/ - unnormalized raw signal data matrices (running extracSignal on the merged peaks, using the output from align2rawsignal)
+(For ease of access, this matrix can also be obtained at chromovar3d.stanford.edu/QTLs/uncorrectedSignal/<hmark>_removeBlacklist_Log10PvalueThreshold_5_DATA_MATRIX.gz)
 </pre>
 
       </div>

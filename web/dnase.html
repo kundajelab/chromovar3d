@@ -83,25 +83,24 @@ Contact: oursu@stanford.edu
 <br>
 <p><strong>Contents</strong></p>
 <pre>
-data - contains all analysis, with the following subdirectories:
+chromovar3d.stanford.edu/DNase/ - contains all analysis, with the following subdirectories:
 
-data/Degner_mapped_reads/eqtl.uchicago.edu/dsQTL_data/MAPPED_READS/ - the reads as mapped in Degner et al. (this is hg18)
-
-alignments and processing
-data/hg19 - data and analysis mapped to hg19, with the following subdirectories:
-data/hg19/liftOver - reads from Degner et al. lifted over to hg19
-data/hg19/shiftedReads/ - reads shifted by 75 bp depending on the strand
-
-peaks
-data/hg19/peaks/subsampled/ - peaks called on each individual
-data/hg19/peaks/subsampled/mergedPeaks_TrimFromSummit - peaks in each individual were trimmed to be 100bp long centered on the summit, then these peaks were merged across individuals
-final list of peaks (before selecting the top 200 000 peaks): data/hg19/peaks/subsampled/mergedPeaks_TrimFromSummit/DNase_TrimFromSummit.mergeBedremoveBlacklist_Log10PvalueThreshold_5.gz
+alignments
+- alignments/liftOver/ - reads from Degner et al. lifted over to hg19 (tagAlign format)
+- alignments/subsampled_reads/ - reads subsampled from merged replicates, at 35 million reads per individual
 
 signal
-data/hg19/subsampled/align2rawsignal/ - raw signal, .mat files.
-for bigwig files, refer to the GEO submission
+signal/bigwig/ - bigwig files of signal for DNase
+signal/align2rawsignal - signal for DNase in .mat format (for use with extractSignal)
 
-raw data matrix of mean signal per peak in each individual: data/hg19/subsampled//align2rawsignal/extractSignal/DNase_removeBlacklist_Log10PvalueThreshold_5_DATA_MATRIX
+peaks
+peaks/peaks_per_individual/ - peaks called on each individual
+peaks/mergedPeaks_TrimFromSummit - peaks in each individual were trimmed to be 100bp long centered on the summit, then these peaks were merged across individuals, which is contained in this directory
+final list of peaks (before selecting the top 200 000 peaks): peaks/mergedPeaks_TrimFromSummit/DNase_TrimFromSummit.mergeBedremoveBlacklist_Log10PvalueThreshold_5.gz
+
+data matrix
+data_matrix/ - Mean signal extracted in the peaks from peaks/mergedPeaks_TrimFromSummit/
+(For easy access, this data matrix can also be accessed as: chromovar3d.stanford.edu/QTLs/uncorrectedSignal/DNase_removeBlacklist_Log10PvalueThreshold_5_DATA_MATRIX.gz)
 </pre>
 
       </div>

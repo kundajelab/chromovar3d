@@ -78,24 +78,6 @@ Deciphering the impact of genetic variants on gene regulation is fundamental to 
 </td>
 <td><img src="./images/webserverpicture.png" width=300></img></td>
 </tbody></table>
-<!--
-<h3>AUTHORS</h3>
-<p>
-Fabian Grubert <sup>1,7</sup>, Judith B. Zaugg<sup>1,2,7</sup>, Maya Kasowski<sup>1,7</sup>, Oana Ursu<sup>1,7</sup>, Damek V. Spacek<sup>1</sup>, Alicia R. Martin<sup>1</sup>, Peyton Greenside<sup>3</sup>, Rohith Srivas<sup>1</sup>, Doug H. Phanstiel<sup>1</sup>, Aleksandra Pekowska<sup>2</sup>, Nastaran Heidari<sup>1</sup>, Ghia Euskirchen<sup>1</sup>, Wolfgang Huber<sup>2</sup>, Jonathan K. Pritchard<sup>1,4,5</sup>, Carlos D. Bustamante<sup>1</sup>, Lars M. Steinmetz<sup>1,2</sup>, Anshul Kundaje<sup>1,6</sup>, and Michael Snyder<sup>1,*</sup>
-</p>
-
-<h3>AFFILIATIONS</h3>
-<ul style="list-style-type: none">
-<li>1) Department of Genetics, Stanford University School of Medicine, Stanford, CA 94305, USA</li>
-<li>2) The European Molecular Biology Laboratory Heidelberg, 69117 Heidelberg, Germany</li>
-<li>3) Biomedical Informatics Graduate Training Program, Stanford University School of Medicine, Stanford, CA 94305, USA</li>
-<li>4) Department of Biology, Stanford University, Stanford, CA 94305, USA</li>
-<li>5) Howard Hughes Medical Institute, Stanford University, Stanford, CA 94305, USA</li>
-<li>6) Department of Computer Science, Stanford University, Stanford, CA 94305, USA</li>
-<li>7) Co-first author</li>
-<li>*) Correspondence: mpsnyder@stanford.edu</li>
-</ul>
--->
 
             <div class="well">
                <h2><img src="./images/db.png" width="20"/> DATA SOURCE</h2>
@@ -119,6 +101,63 @@ Fabian Grubert <sup>1,7</sup>, Judith B. Zaugg<sup>1,2,7</sup>, Maya Kasowski<su
                 <br><div style='margin:20px;border:solid 2px green;display:none;' id='embed_bigwig'></div>
             </div>
             
+
+
+<h2>Data overview</h2>
+<p>
+Our data are organized in the following directories:
+</p>
+<pre>
+Data processing: Personal genomes, Histone marks, DNaseI-seq, RNAseq, HiC, ChIA-PET
+
+QTL analysis: QTLs
+
+Other analyses: Motif analysis/TF binding, GWAS
+
+Raw data: GEO
+
+Code: Code
+</pre>
+
+<h2>Quick start</h2>
+
+<p>
+The most common use of this portal is using the QTL analysis.
+For that, all you need to download is the QTL directory at <a href="http://chromovar3d.stanford.edu/QTLs/" target="_blank">http://chromovar3d.stanford.edu/QTLs/</a>
+</p>
+
+<a href="http://chromovar3d.stanford.edu/QTLs/results" target="_blank">http://chromovar3d.stanford.edu/QTLs/results</a> has the following contents (see READMEs in each of these for more detailed descriptions of the files):
+
+<h3>Genomic regions</h3>
+<ul>
+<li>
+QTLs/peak_info - Files containing information about the peaks used in this study. Specifically, these files assign peak IDs to peaks in this study, and these peak IDs are referenced in the localQTL and distalQTL analysis. These peaks and genes represent the rows in the data matrices below. The peak IDs follow the order or peaks (or genes) in the data matrices from the subdirectory uncorrectedSignal. There are 2 subdirectories:
+</li>
+<li>
+QTLs/peak_info/total_peaks - All genomic regions (peaks or genes) for which we have computed data matrices for QTL calling. These data matrices are in QTLs/results/uncorrrectedSignal/. Each peak is associated with an ID that is referenced in our analyses below (for instance, the row names of the PEER-corrected data matrices in QTLs/results/correctedSignal/ are the peak IDs.
+</li>
+<li>
+QTLs/peak_info/tested_peaks - Genomic regions (peaks or genes) that were used in the QTL calling. They are fewer than the total regions, because we used a filter on peak variability for testing it for being a QTL (see Methods). We provide raw signal data matrices for the complete set in total_peaks, so you can start from these and perform your analysis, if you wish to not impose the variability filter (our filter on variability might not be the best filter).
+</li>
+</ul>
+
+<h3>Data matrices</h3>
+<ul>
+<li>
+QTLs/uncorrectedSignal - the initial data matrices, obtained by computing the mean signal inside histone mark peaks, DNaseI(dhs) peaks or gene expression estimates.
+</li>
+<li>
+QTLs/correctedSignal - the same matrices as in uncorrectedSignal, but after removing confounding factors using PEER. For the histone marks, the data matrices in uncorrectedSignal and correctedSignal have the same dimensions. For dhs, the data matrix in uncorrectedSignal contains the signal in all 700k dhs merged peaks we called. However, the data matrix in correctedSignal only contains signal from the top 200k peaks (ranked by signal intensity). For RNA, the data matrix from uncorrectedSignal contains signal in all protein-coding and lncRNA genes used in this study, whereas the data matrix in correctedSignal only contains signal for those genes that did not have 0 entries in the uncorrected matrix. 
+</li>
+<li>To get the coordinates of the genomic regions in the correctedSignal matrices, use the first column, which is the peak/gene ID, as referenced in peak_info/total_peaks/</li>
+</ul>
+
+<h3>QTLs</h3>
+<ul>
+<li>QTLs/localQTL - Bedpe files with the results from the local QTL analysis</li>
+<li>QTLs/distalQTL - Bedpe files with the results from the distal QTL analysis</li>
+</ul>
+
 
         <script>
             init_ddl_bigwig();

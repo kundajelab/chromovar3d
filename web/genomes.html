@@ -84,19 +84,11 @@ Contact: oursu@stanford.edu and armartin@broadinstitute.org
 <br>
 <p><strong>Contents</strong></p>
 <pre>
+chromovar3d.stanford.edu/genomes
+
 Genotype data
-vcf/all_YRI_compiled - the vcf files used in this analysis
-
-Imputation data
-imputed - files related to the imputation
-imputed/imputation_files - outputs from shapeit2
-imputed/imputed_vcf - intermediary files for making VCF files from the imputation data
-imputed/VCF - VCF files from the imputation data
-
-Personal genomes 
-personal_genomes - personal genome fasta files
-personal_genomes/Fasta - fasta files for personal genomes (without the imputed individuals)
-personal_genomes/imputedFasta - fasta files for personal genomes (for the imputed individuals)
+genomes/VCF/ - the genotype data used in this analysis, in VCF format. Note that these are all genotypes we had available for the individuals in this study. The filtering to keep only the SNPs with MAF > 5% will lead to a smaller set of SNPs than reported in this file. Contact judith.zaugg@embl.de for the list of SNPs with MAF > 5%.
+genomes/personal_genomes_fasta/ - the personal genomes for each individual in this study. Each individual contains 2 haplotypes: <individual>.maternal.fa and <individual>.paternal.fa
 </pre>
 
       </div>

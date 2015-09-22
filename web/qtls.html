@@ -81,12 +81,20 @@ Contact: judith.zaugg@embl.de
 <br>
 <p><strong>Contents</strong></p>
 <pre>
-results - QTL analysis
+Genomic regions
+- peak_info - Files containing information about the peaks used in this study. Specifically, these files assign peak IDs to peaks in this study, and these peak IDs are referenced in the localQTL and distalQTL analysis. These peaks and genes represent the rows in the data matrices below. The peak IDs follow the order or peaks (or genes) in the data matrices from the subdirectory uncorrectedSignal. There are 2 subdirectories:
+peak_info/total_peaks - All genomic regions (peaks or genes) for which we have computed data matrices for QTL calling. These data matrices are in QTLs/results/uncorrrectedSignal/. Each peak is associated with an ID that is referenced in our analyses below (for instance, the row names of the PEER-corrected data matrices in QTLs/results/correctedSignal/ are the peak IDs.
+peak_info/tested_peaks - Genomic regions (peaks or genes) that were used in the QTL calling. They are fewer than the total regions, because we used a filter on peak variability for testing it for being a QTL (see Methods). We provide raw signal data matrices for the complete set in total_peaks, so you can start from these and perform your analysis, if you wish to not impose the variability filter (our filter on variability might not be the best filter).
 
-results/correctedSignal/ - PEER corrected signal matrices for H3K4ME1, H3K4ME3, H3K27AC, dhs and RNA
+Data matrices
+- uncorrectedSignal - the initial data matrices, obtained by computing the mean signal inside histone mark peaks, DNaseI(dhs) peaks or gene expression estimates.
 
-results/local - local QTLs
-results/distal - distal QTLs
+- correctedSignal - the same matrices as in uncorrectedSignal, but after removing confounding factors using PEER. For the histone marks, the data matrices in uncorrectedSignal and correctedSignal have the same dimensions. For dhs, the data matrix in uncorrectedSignal contains the signal in all 700k dhs merged peaks we called. However, the data matrix in correctedSignal only contains signal from the top 200k peaks (ranked by signal intensity). For RNA, the data matrix from uncorrectedSignal contains signal in all protein-coding and lncRNA genes used in this study, whereas the data matrix in correctedSignal only contains signal for those genes that did not have 0 entries in the uncorrected matrix.
+To get the coordinates of the genomic regions in the correctedSignal matrices, use the first column, which is the peak/gene ID, as referenced in peak_info/total_peaks/
+
+- localQTL - Bedpe files with the results from the local QTL analysis
+
+- distalQTL - Bedpe files with the results from the distal QTL analysis
 </pre>
 
       </div>

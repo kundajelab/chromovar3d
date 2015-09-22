@@ -82,21 +82,15 @@ Contact: oursu@stanford.edu
 <br>
 <p><strong>Contents</strong></p>
 <pre>
-results/2015-06-13 contains the analysis and files, and has the following subdirectories.
+chromovar3d.stanford.edu/motifs/ contains the analysis and files, and has the following subdirectories.
 
-Input data subdirectories:
-Data - some basic data used for the motif analysis
-Motif_Data - contains fasta files with the sequences of each individual at the sites scored in the motif analysis (see methods)
-Local - contains QTL matrices related to the local QTLs as used for the motif analysis
-Distal - contains QTL matrices related to the distal QTLs as used for the motif analysis
-TFBS - contains the TFBS used in this analysis
+Motif_Data - file with motif matches across the genome
 Motif_Data/motifMatches - the motif matches in the genome (defined as matches to the reference genome with a log odds score >=0)
+Motif_Data/motifFiles - the PWMs used
 
 Analysis files:
-Motif_analysis_results - contains the main motif analysis. The directories follow the format Motif_Analysis_${hmark}/motif.pouya.Motif.${motifName}scanThresh0 which contains two directories: 1) Scores, which contains the motif scores in each individual's genome and 2) Correlations, which contains the correlation analysis between motif and peak/dhs/RNA signal 
-CrossTFanalysis - motif analysis over all histone marks, dhs and RNA and all transcription factors. It contains the motif analysis files following Benjamini Hochberg correction
-OverlapEnrichment - overlap enrichment analysis
-signal - signal extracted at the disrupted motifs correlating with H3K27ac signal
+Motif_analysis_results - contains the main motif analysis. The directories follow the format Motif_Analysis_${hmark}/motif.pouya.Motif.${motifName}scanThresh0/Scores/ which contains the motif scores in each individual's genome.
+motifAnalysisTables - output tables from motif analysis                                                        
 </pre>
 
       </div>
@@ -158,6 +152,12 @@ Contact: pgreens@stanford.edu
            <ul>
             <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/TFBS/TFBS_rank_enrichments" target="_blank">http://chromovar3d.stanford.edu/TFBS/TFBS_rank_enrichments</a> </li>
           </ul>
+
+<br>
+<p><strong>Contents</strong></p>
+<pre>
+Maurano-based rank enrichment of hQTLs in TFBS for different TFs
+</pre>
       </div>
 
 <h2>Methods</h2>

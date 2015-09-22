@@ -78,6 +78,12 @@ Contact: pgreens@stanford.edu
            <ul>
             <li>Download URL: <a target="_blank" href="http://chromovar3d.stanford.edu/gwas/enrichment" target="_blank">http://chromovar3d.stanford.edu/gwas/enrichment</a> </li>
            </ul>
+<p><strong>Contents</strong></p>
+<pre>
+gwas_rank_enrichment_plots: Maurano-based rank enrichment for all GWAS SNPs in hQTLs.
+non_rank_enrichment_tables: Table of Fisher enrichment for hQTLs in significant (p<10e-6) and non-significant GWAS hits.
+</pre>
+           
       </div>
 
 <h2>Methods</h2>
@@ -119,15 +125,16 @@ Contact: oursu@stanford.edu
 <br>
 <p><strong>Contents</strong></p>
 <pre>
-results/2015-06-13 - analysis files
+enrichment - GWAS enrichment tests
+networks - GWAS networks based on the chromatin QTLs
 
-results/2015-06-13/Annotations - annotations for regulatory elements used in creating the networks
-results/2015-06-13/GWAS_hits_Peyton - the GWAS hit -related bed files
-results/2015-06-13/gwasOverlaps - overlaps with GWAS and networks
-results/2015-06-13/QTLs - QTLs expanded in LD
+networks/ - analysis files
+networks/Annotations/ - annotations for regulatory elements used in creating the networks
+networks/networks/ - GWAS networks for all diseases
+networks/QTLs - QTLs expanded in YRI, which were used for creating the GWAS networks
 
 The GWAS networks are in files with the following paths:
-results/2015-06-13/gwasOverlaps/overlapQTL_${disease}_pruned_rsq_0.8_expanded_rsq_0.8/overlapQTL_${disease}_pruned_rsq_0.8_expanded_rsq_0.8.bed.LD08_p5.bed.overlapGWAS.LD0.8.p0.00001.txt.net.pval0.00001.uniq
+networks/networks/overlapQTL_${disease}_pruned_rsq_0.8_expanded_rsq_0.8/overlapQTL_${disease}_pruned_rsq_0.8_expanded_rsq_0.8.bed.LD08_p5.bed.overlapGWAS.LD0.8.p0.00001.txt.net.pval0.00001.uniq
 </pre>
 
       </div>
